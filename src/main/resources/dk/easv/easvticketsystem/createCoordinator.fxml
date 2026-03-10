@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+
+<?import java.lang.String?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="dk.easv.easvticketsystem.GUI.CreateCoordinatorController"
+      alignment="CENTER" spacing="20">
+
+    <VBox spacing="12" maxWidth="420" styleClass="card">
+
+        <Label text="Create Coordinator" styleClass="title"/>
+
+        <!-- BASIC INFO -->
+        <TextField fx:id="nameField" promptText="Full name"/>
+        <TextField fx:id="usernameField" promptText="Username"/>
+        <TextField fx:id="emailField" promptText="Email"/>
+        <PasswordField fx:id="passwordField" promptText="Password"/>
+
+        <!-- ROLE -->
+        <ComboBox fx:id="roleBox">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Coordinator"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <!-- CREATED DATE -->
+        <TextField fx:id="createdField" promptText="Created date (yyyy-mm-dd)"/>
+
+        <!-- ACTIONS -->
+        <HBox spacing="10">
+            <Button text="Cancel" onAction="#cancel" styleClass="secondary-btn"/>
+            <Button text="Create Coordinator" onAction="#createCoordinator" styleClass="primary-btn"/>
+        </HBox>
+
+    </VBox>
+</VBox>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="dk.easv.easvticketsystem.GUI.CoordinatorController">
+
+    <!-- HEADER -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="header" style="-fx-padding:15;">
+            <Label text="Coordinator Dashboard" styleClass="headerTitle"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Logout" onAction="#logout"/>
+        </HBox>
+    </top>
+
+    <!-- CONTENT -->
+    <center>
+        <VBox spacing="25" style="-fx-padding: 25;">
+
+            <!-- EVENTS CARD -->
+            <VBox spacing="10" styleClass="card">
+
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="My Events" styleClass="title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="+ Create Event" onAction="#createEvent" styleClass="primary-btn"/>
+                </HBox>
+
+                <!-- TABLE HEADER -->
+                <HBox spacing="20">
+                    <Label text="Title" prefWidth="180"/>
+                    <Label text="Date" prefWidth="120"/>
+                    <Label text="Location" prefWidth="220"/>
+                    <Label text="Tickets" prefWidth="100"/>
+                    <Label text="Actions" prefWidth="120"/>
+                </HBox>
+
+                <Separator/>
+
+                <!-- EVENTS LIST -->
+                <VBox fx:id="eventContainer" spacing="8"/>
+
+            </VBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

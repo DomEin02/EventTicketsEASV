@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="dk.easv.easvticketsystem.GUI.AdminController">
+
+    <!-- HEADER -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="header" style="-fx-padding:15;">
+            <Label text="Admin Dashboard" styleClass="headerTitle"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Logged in as: admin" fx:id="userLabel"/>
+            <Button text="Logout" onAction="#logout"/>
+        </HBox>
+    </top>
+
+    <!-- CONTENT -->
+    <center>
+        <VBox spacing="25" style="-fx-padding: 25;">
+
+            <!-- USERS -->
+            <VBox spacing="10" styleClass="card">
+
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="User Management" styleClass="title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="+ Create User" onAction="#createUser" styleClass="primary-btn"/>
+                </HBox>
+
+                <!-- TABLE HEADER -->
+                <HBox spacing="20">
+                    <Label text="Name" prefWidth="160"/>
+                    <Label text="Username" prefWidth="120"/>
+                    <Label text="Email" prefWidth="200"/>
+                    <Label text="Role" prefWidth="120"/>
+                    <Label text="Created" prefWidth="120"/>
+                    <Label text="Actions" prefWidth="140"/>
+                </HBox>
+
+                <Separator/>
+
+                <VBox fx:id="userContainer" spacing="8"/>
+
+            </VBox>
+
+
+            <!-- EVENTS -->
+            <VBox spacing="10" styleClass="card">
+
+                <Label text="Events Overview" styleClass="title"/>
+
+                <HBox spacing="20">
+                    <Label text="Title" prefWidth="180"/>
+                    <Label text="Date" prefWidth="120"/>
+                    <Label text="Location" prefWidth="220"/>
+                    <Label text="Coordinator" prefWidth="140"/>
+                    <Label text="Tickets" prefWidth="100"/>
+                    <Label text="Actions" prefWidth="120"/>
+                </HBox>
+
+                <Separator/>
+
+                <VBox fx:id="eventContainer" spacing="8"/>
+
+            </VBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

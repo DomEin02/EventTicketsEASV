@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="dk.easv.easvticketsystem.GUI.LoginController">
+
+    <VBox alignment="CENTER">
+
+        <VBox spacing="15" maxWidth="320" styleClass="card" alignment="CENTER">
+
+            <Label text="EASV Ticket System" styleClass="title"/>
+            <Label text="Sign in to continue" styleClass="subtitle"/>
+
+            <TextField fx:id="username" promptText="Username"/>
+            <PasswordField fx:id="password" promptText="Password"/>
+
+            <Button text="Login" onAction="#login" styleClass="primary-btn"/>
+
+            <Label fx:id="info"/>
+
+        </VBox>
+    </VBox>
+
+</StackPane>

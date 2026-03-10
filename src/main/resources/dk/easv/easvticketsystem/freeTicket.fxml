@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="dk.easv.easvticketsystem.GUI.FreeTicketController"
+      alignment="CENTER" spacing="15">
+
+    <VBox spacing="12" maxWidth="360" styleClass="card">
+
+        <Label text="Free Ticket" styleClass="title"/>
+        <Button text="Generate" onAction="#generate" styleClass="primary-btn"/>
+        <Label fx:id="ticketId" styleClass="subtitle"/>
+        <Button text="Back" onAction="#back" styleClass="secondary-btn"/>
+
+    </VBox>
+</VBox>

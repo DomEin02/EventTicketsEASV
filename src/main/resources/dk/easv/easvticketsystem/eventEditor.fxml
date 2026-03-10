@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.HBox?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="dk.easv.easvticketsystem.GUI.EventEditorController"
+      alignment="CENTER" spacing="15">
+
+    <VBox spacing="12" maxWidth="420" styleClass="card">
+        <Label text="Create Event" styleClass="title"/>
+
+        <!-- EVENT INFO -->
+        <TextField fx:id="titleField" promptText="Event Title"/>
+        <TextField fx:id="dateField" promptText="Date (yyyy-mm-dd)"/>
+        <TextField fx:id="timeField" promptText="Time (hh:mm)"/>
+        <TextField fx:id="locationField" promptText="Location"/>
+        <TextField fx:id="maxTicketsField" promptText="Max tickets"/>
+
+        <!-- ACTIONS -->
+        <HBox spacing="10">
+            <Button text="Cancel" onAction="#cancel" styleClass="secondary-btn"/>
+            <Button text="Save Event" onAction="#saveEvent" styleClass="primary-btn"/>
+        </HBox>
+
+    </VBox>
+</VBox>
