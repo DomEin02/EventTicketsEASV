@@ -92,5 +92,5 @@ public class AdminController {
         row.getChildren().addAll(l1,l2,l3,l4,l5,actions);
         eventContainer.getChildren().add(row);
     }
-
+// Ligegyldig note
 }
