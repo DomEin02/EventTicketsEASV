@@ -3,6 +3,7 @@ package dk.easv.easvticketsystem.GUI;
 import dk.easv.easvticketsystem.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import dk.easv.easvticketsystem.GUI.model.Event;
 
 public class EventEditorController {
 
@@ -19,7 +20,16 @@ public class EventEditorController {
         String date = dateField.getText();
         String time = timeField.getText();
         String location = locationField.getText();
-        String maxTickets = maxTicketsField.getText();
+        int maxTickets;
+
+        try {
+            maxTickets = Integer.parseInt(maxTicketsField.getText());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number");
+            return;
+        }
+
+        Event event = new Event(title, date, time, location, maxTickets);
 
         System.out.println("EVENT CREATED:");
         System.out.println(title + " | " + date + " " + time + " | " + location + " | " + maxTickets);
