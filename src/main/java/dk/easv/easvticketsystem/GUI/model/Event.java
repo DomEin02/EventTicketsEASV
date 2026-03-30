@@ -15,4 +15,11 @@ public class Event {
         this.location = location;
         this.maxTickets = maxTickets;
     }
+
+    //Getters
+    public String getTitle() {return title;}
+    public String getDate() {return date;}
+    public String getTime() {return time;}
+    public String getLocation() {return location;}
+    public int getMaxTickets() {return maxTickets;}
 }
