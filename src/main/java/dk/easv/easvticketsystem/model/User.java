@@ -1,4 +1,4 @@
-package dk.easv.easvticketsystem.GUI.model;
+package dk.easv.easvticketsystem.model;
 
 public class User {
 

@@ -1,6 +1,6 @@
 package dk.easv.easvticketsystem.GUI;
 
-import dk.easv.easvticketsystem.GUI.model.User;
+import dk.easv.easvticketsystem.model.User;
 import dk.easv.easvticketsystem.SceneManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;

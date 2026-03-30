@@ -9,7 +9,7 @@
       alignment="CENTER" spacing="15">
 
     <VBox spacing="12" maxWidth="420" styleClass="card">
-        <Label text="Create Event" styleClass="title"/>
+        <Label text="Edit Event" styleClass="title"/>
 
         <!-- EVENT INFO -->
         <TextField fx:id="titleField" promptText="Event Title"/>
@@ -21,7 +21,7 @@
         <!-- ACTIONS -->
         <HBox spacing="10">
             <Button text="Cancel" onAction="#cancel" styleClass="secondary-btn"/>
-            <Button text="Save Event" onAction="#saveEvent" styleClass="primary-btn"/>
+            <Button text="Save Changes" onAction="#saveChanges" styleClass="primary-btn"/>
         </HBox>
 
     </VBox>
