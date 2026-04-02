@@ -5,6 +5,7 @@ import dk.easv.easvticketsystem.SceneManager;
 import dk.easv.easvticketsystem.model.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -20,17 +21,22 @@ public class CoordinatorController {
     public void initialize() {
         try {
             EventDAO dao = new EventDAO();
+            eventContainer.getChildren().clear();
 
             List<Event> events = dao.getAllEvents();
 
             for (Event e : events) {
-
                 int sold = dao.getTicketCountForEvent(e.getEventId());
                 addEvent(e, sold + "/" + e.getMaxCapacity());
             }
         }
         catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Could not load events");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 

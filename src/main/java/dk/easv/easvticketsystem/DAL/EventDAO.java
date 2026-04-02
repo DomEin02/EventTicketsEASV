@@ -14,6 +14,19 @@ public class EventDAO {
         new DBConnector();
     }
 
+    public void createEvent(Event event) throws Exception {
+        String sql = "INSERT INTO Events (title, start_datetime, location, max_capacity) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DBConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, event.getTitle());
+            stmt.setTimestamp(2, java.sql.Timestamp.valueOf(event.getStartDateTime()));
+            stmt.setString(3, event.getLocation());
+            stmt.setInt(4, event.getMaxCapacity());
+
+            stmt.executeUpdate();
+        }
+    }
+
     public List<Event> getAllEvents() throws Exception {
 
         List<Event> events = new ArrayList<>();

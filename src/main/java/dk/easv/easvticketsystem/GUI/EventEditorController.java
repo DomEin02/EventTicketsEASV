@@ -3,6 +3,7 @@ package dk.easv.easvticketsystem.GUI;
 import dk.easv.easvticketsystem.DAL.EventDAO;
 import dk.easv.easvticketsystem.SceneManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import dk.easv.easvticketsystem.model.Event;
 import java.time.LocalDateTime;
@@ -11,11 +12,16 @@ public class EventEditorController {
 
     public static Event selectedEvent;
 
-    @FXML private TextField titleField;
-    @FXML private TextField dateField;
-    @FXML private TextField timeField;
-    @FXML private TextField locationField;
-    @FXML private TextField maxTicketsField;
+    @FXML
+    private TextField titleField;
+    @FXML
+    private TextField dateField;
+    @FXML
+    private TextField timeField;
+    @FXML
+    private TextField locationField;
+    @FXML
+    private TextField maxTicketsField;
 
     @FXML
     public void initialize() {
@@ -41,25 +47,41 @@ public class EventEditorController {
             // Convert to LocalDateTime
             LocalDateTime startDateTime = LocalDateTime.parse(date + "T" + time);
 
-            // Update selected event
-            selectedEvent.setTitle(title);
-            selectedEvent.setStartDateTime(startDateTime);
-            selectedEvent.setLocation(location);
-            selectedEvent.setMaxCapacity(maxTickets);
+            //
+            EventDAO eventDAO = new EventDAO();
 
-            EventDAO dao = new EventDAO();
+            //Update selected event
+            if (selectedEvent != null) {
+                //Update
+                selectedEvent.setTitle(title);
+                selectedEvent.setStartDateTime(startDateTime);
+                selectedEvent.setLocation(location);
+                selectedEvent.setMaxCapacity(maxTickets);
 
-            dao.updateEvent(selectedEvent);
+                eventDAO.updateEvent(selectedEvent);
+
+            } else {
+                //Create
+                Event newEvent = new Event(
+                        0,
+                        title,
+                        startDateTime,
+                        null,
+                        location,
+                        "",
+                        "",
+                        maxTickets
+                );
+
+                eventDAO.createEvent(newEvent);
+            }
 
             // Reset selected event
             selectedEvent = null;
-
             SceneManager.load("coordinator.fxml");
-        }
-        catch (Exception e) {
 
+        } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
 
