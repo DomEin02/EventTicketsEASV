@@ -53,4 +53,8 @@ public class Event {
     public void setMaxCapacity(int maxCapacity) {
         this.maxCapacity = maxCapacity;
     }
+
+    public void setEventId(int id) {
+        this.eventId = id;
+    }
 }

@@ -14,16 +14,25 @@ public class EventDAO {
         new DBConnector();
     }
 
-    public void createEvent(Event event) throws Exception {
+    public int createEvent(Event event) throws Exception {
         String sql = "INSERT INTO Events (title, start_datetime, location, max_capacity) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBConnector.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, event.getTitle());
             stmt.setTimestamp(2, java.sql.Timestamp.valueOf(event.getStartDateTime()));
             stmt.setString(3, event.getLocation());
             stmt.setInt(4, event.getMaxCapacity());
 
             stmt.executeUpdate();
+
+            ResultSet keys = stmt.getGeneratedKeys();
+            if (keys.next()) {
+                int id = keys.getInt(1);
+                event.setEventId(id);
+                return id;
+            } else {
+                throw new Exception("Event id not found");
+            }
         }
     }
 
@@ -87,5 +96,13 @@ public class EventDAO {
             }
         }
         return 0;
+    }
+    public void deleteEvent(int eventId) throws Exception {
+        String sql = "DELETE FROM Events " + "WHERE event_id = ?";
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                 stmt.setInt(1, eventId);
+                 stmt.executeUpdate();
+        }
     }
 }

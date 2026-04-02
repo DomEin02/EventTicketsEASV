@@ -38,55 +38,87 @@ public class EventEditorController {
     private void saveChanges() {
 
         try {
+            //Get input
             String title = titleField.getText();
             String date = dateField.getText();
             String time = timeField.getText();
             String location = locationField.getText();
-            int maxTickets = Integer.parseInt(maxTicketsField.getText());
+            String maxTicketsStr = maxTicketsField.getText().trim();
 
-            // Convert to LocalDateTime
-            LocalDateTime startDateTime = LocalDateTime.parse(date + "T" + time);
+            //Check empty fields
+            if (title.isEmpty() || date.isEmpty() || time.isEmpty() || location.isEmpty() || maxTicketsStr.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Input Error");
+                alert.setHeaderText("All fields must be filled in");
+                alert.showAndWait();
+                return;
+            }
 
-            //
+            //Parse maxTickets and check if > 0
+            int maxTickets;
+            try {
+                maxTickets = Integer.parseInt(maxTicketsStr);
+                if (maxTickets <= 0) throw new NumberFormatException();
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Input Error");
+                alert.setHeaderText("Max tickets must be positive");
+                alert.showAndWait();
+                return;
+            }
+
+            //Parse date and time
+            LocalDateTime startDateTime;
+            try {
+                startDateTime = LocalDateTime.parse(date + "T" + time + ":00");
+            } catch (Exception ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Input Error");
+                alert.setHeaderText("Invalid date or time format");
+                alert.setContentText("Expected format: YYYY-MM-DD for date and HH:MM for time");
+                alert.showAndWait();
+                return;
+            }
+
+            //Save in DB
             EventDAO eventDAO = new EventDAO();
 
-            //Update selected event
             if (selectedEvent != null) {
-                //Update
                 selectedEvent.setTitle(title);
                 selectedEvent.setStartDateTime(startDateTime);
                 selectedEvent.setLocation(location);
                 selectedEvent.setMaxCapacity(maxTickets);
-
                 eventDAO.updateEvent(selectedEvent);
-
             } else {
-                //Create
                 Event newEvent = new Event(
-                        0,
-                        title,
+                        0, title,
                         startDateTime,
                         null,
                         location,
                         "",
                         "",
-                        maxTickets
-                );
-
-                eventDAO.createEvent(newEvent);
+                        maxTickets);
+                int generatedId = eventDAO.createEvent(newEvent);
+                newEvent.setEventId(generatedId);
             }
 
-            // Reset selected event
             selectedEvent = null;
             SceneManager.load("coordinator.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Error");
+            alert.setHeaderText("Could not save event");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
     @FXML
-    private void cancel() {
+    private void cancelChanges() {
+        //Go back without saving
+        selectedEvent = null;
         SceneManager.load("coordinator.fxml");
     }
 }

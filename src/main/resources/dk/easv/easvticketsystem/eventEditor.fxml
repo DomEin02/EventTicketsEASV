@@ -20,7 +20,7 @@
 
         <!-- ACTIONS -->
         <HBox spacing="10">
-            <Button text="Cancel" onAction="#cancel" styleClass="secondary-btn"/>
+            <Button text="Cancel" onAction="#cancelChanges" styleClass="secondary-btn"/>
             <Button text="Save Changes" onAction="#saveChanges" styleClass="primary-btn"/>
         </HBox>
 

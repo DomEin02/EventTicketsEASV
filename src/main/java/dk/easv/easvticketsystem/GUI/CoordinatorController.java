@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+
 import java.util.List;
 
 public class CoordinatorController {
@@ -69,14 +70,31 @@ public class CoordinatorController {
         Label l4 = new Label(tickets);
         l4.setPrefWidth(100);
 
+
+        //Edit button
         Button edit = new Button("Edit");
         edit.getStyleClass().add("secondary-btn");
-        edit.setOnAction(e -> openEditor(event));
+        edit.setOnAction(e ->openEditor(event));
 
+        //Delete button
         Button delete = new Button("Delete");
         delete.getStyleClass().add("secondary-btn");
-        delete.setOnAction(e -> eventContainer.getChildren().remove(row));
+        delete.setOnAction(e -> {
+            try {
+                EventDAO dao = new EventDAO();
+                dao.deleteEvent(event.getEventId());   // Slet fra DB
+                eventContainer.getChildren().remove(row); // Fjern fra GUI
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Could not delete event");
+                alert.setContentText(ex.getMessage());
+                alert.showAndWait();
+            }
+                });
 
+        //Ticket button
         Button ticketsBtn = new Button("Tickets");
         ticketsBtn.getStyleClass().add("primary-btn");
         ticketsBtn.setOnAction(e -> openTickets(event.getTitle()));
@@ -92,7 +110,6 @@ public class CoordinatorController {
     private void openEditor(Event event) {
 
         EventEditorController.selectedEvent = event;
-
         SceneManager.load("eventEditor.fxml");
     }
 
