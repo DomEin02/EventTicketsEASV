@@ -1,5 +1,8 @@
 package dk.easv.easvticketsystem.GUI;
 
+import dk.easv.easvticketsystem.DAL.EventDAO;
+import dk.easv.easvticketsystem.DAL.UserDAO;
+import dk.easv.easvticketsystem.model.Event;
 import dk.easv.easvticketsystem.model.User;
 import dk.easv.easvticketsystem.SceneManager;
 import javafx.fxml.FXML;
@@ -9,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.List;
+
 public class AdminController {
 
     @FXML private VBox userContainer;
@@ -17,16 +22,39 @@ public class AdminController {
 
     @FXML
     public void initialize() {
+        try {
+            UserDAO userDAO = new UserDAO();
 
-        // USERS
-        addUser("Admin User","admin","admin@easv.dk","Admin","2024-01-01");
-        addUser("John Coordinator","coord1","john@easv.dk","Coordinator","2024-01-15");
-        addUser("Sarah Events","coord2","sarah@easv.dk","Coordinator","2024-02-01");
+            List<User> users = userDAO.getAllUsers();
 
-        // EVENTS
-        addEvent("Spring Party","2026-04-15","Main Hall","John","145/200");
-        addEvent("Wine Tasting","2026-03-20","EASV Bar","John","32/40");
-        addEvent("Tech Conference","2026-05-10","Conference Center","Sarah","287/300");
+            for (User u : users) {
+                addUser(u);
+            }
+
+            EventDAO eventDAO = new EventDAO();
+
+            List<Event> events = eventDAO.getAllEvents();
+
+            for (Event e : events) {
+
+                int sold = eventDAO.getTicketCountForEvent(e.getEventId());
+
+                addEvent(
+                        e.getTitle(),
+                        e.getStartDateTime()
+                                .toLocalDate()
+                                .toString(),
+                        e.getLocation(),
+                        "Coordinator", // placeholder
+                        sold + "/" + e.getMaxCapacity()
+                );
+            }
+        }
+        catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
     }
 
     @FXML
@@ -44,30 +72,45 @@ public class AdminController {
         SceneManager.load("userEditor.fxml");
     }
 
-    private void addUser(String name, String username, String email, String role, String created) {
+    private void addUser(User user) {
 
         HBox row = new HBox(20);
         row.setAlignment(Pos.CENTER_LEFT);
         row.getStyleClass().add("row");
 
-        Label l1 = new Label(name);     l1.setPrefWidth(160);
-        Label l2 = new Label(username); l2.setPrefWidth(120);
-        Label l3 = new Label(email);    l3.setPrefWidth(200);
-        Label l4 = new Label(role);     l4.setPrefWidth(120);
-        Label l5 = new Label(created);  l5.setPrefWidth(120);
+        Label l1 = new Label(user.getName());
+        l1.setPrefWidth(160);
+
+        Label l2 = new Label(user.getUsername());
+        l2.setPrefWidth(120);
+
+        Label l3 = new Label(user.getEmail());
+        l3.setPrefWidth(200);
+
+        Label l4 = new Label(user.getRole());
+        l4.setPrefWidth(120);
+
+        Label l5 = new Label(user.getCreated());
+        l5.setPrefWidth(120);
 
         Button edit = new Button("Edit");
+
         edit.getStyleClass().add("secondary-btn");
-        edit.setOnAction(e -> SceneManager.load("userEditor.fxml"));
+
+        edit.setOnAction(e -> openEditUser(user));
 
         Button delete = new Button("Delete");
+
         delete.getStyleClass().add("secondary-btn");
+
         delete.setOnAction(e -> userContainer.getChildren().remove(row));
 
         HBox actions = new HBox(8, edit, delete);
+
         actions.setPrefWidth(140);
 
-        row.getChildren().addAll(l1,l2,l3,l4,l5,actions);
+        row.getChildren().addAll(l1,l2,l3,l4,l5, actions);
+
         userContainer.getChildren().add(row);
     }
 
