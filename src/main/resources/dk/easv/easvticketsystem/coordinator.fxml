@@ -11,7 +11,7 @@
         <HBox spacing="20" alignment="CENTER_LEFT" styleClass="header" style="-fx-padding:15;">
             <Label text="Coordinator Dashboard" styleClass="headerTitle"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Logout" onAction="#logout"/>
+            <Button text="Logout" onAction="#logout" styleClass="secondary-btn"/>
         </HBox>
     </top>
 
@@ -28,6 +28,39 @@
                     <Button text="+ Create Event" onAction="#createEvent" styleClass="primary-btn"/>
                 </HBox>
 
+                <HBox spacing="10">
+
+                    <!-- Search text -->
+                    <TextField fx:id="searchField"
+                               promptText="Search title or location"
+                               onKeyReleased="#filterEvents"/>
+
+                    <!-- Date filter -->
+                    <DatePicker fx:id="dateFilter"
+                                onAction="#filterEvents"/>
+
+                    <!-- Location filter -->
+                    <TextField fx:id="locationFilter"
+                               promptText="Filter location"
+                               onKeyReleased="#filterEvents"/>
+
+                    <!-- Capacity filter -->
+                    <TextField fx:id="capacityFilter"
+                               promptText="Min capacity"
+                               onKeyReleased="#filterEvents"/>
+
+                    <!-- Future events only -->
+                    <CheckBox fx:id="futureCheck"
+                              text="Future only"
+                              onAction="#filterEvents"/>
+
+                    <!-- CLEAR BUTTON -->
+                    <Button text="Clear Filters"
+                            onAction="#clearFilters"
+                            styleClass="secondary-btn"/>
+
+                </HBox>
+
                 <!-- TABLE HEADER -->
                 <HBox spacing="20">
                     <Label text="Title" prefWidth="180"/>
@@ -40,7 +73,12 @@
                 <Separator/>
 
                 <!-- EVENTS LIST -->
-                <VBox fx:id="eventContainer" spacing="8"/>
+                <ScrollPane fitToWidth="true" prefHeight="400">
+
+                    <VBox fx:id="eventContainer"
+                          spacing="8"/>
+
+                </ScrollPane>
 
             </VBox>
 
