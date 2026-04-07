@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
 
 import java.util.List;
 
@@ -19,41 +21,38 @@ public class AdminController {
     @FXML private VBox userContainer;
     @FXML private VBox eventContainer;
     @FXML private Label userLabel;
+    @FXML private javafx.scene.control.TextField userSearchField;
+    @FXML private javafx.scene.control.ComboBox<String> roleFilter;
+
+    private List<User> allUsers;
 
     @FXML
     public void initialize() {
         try {
-            UserDAO userDAO = new UserDAO();
-
-            List<User> users = userDAO.getAllUsers();
-
-            for (User u : users) {
-                addUser(u);
-            }
+            UserDAO dao = new UserDAO();
+            allUsers = dao.getAllUsers();
+            loadUsers(allUsers);
+            roleFilter.getItems().addAll("Admin", "Coordinator");
 
             EventDAO eventDAO = new EventDAO();
-
             List<Event> events = eventDAO.getAllEvents();
-
             for (Event e : events) {
-
                 int sold = eventDAO.getTicketCountForEvent(e.getEventId());
 
-                addEvent(
-                        e.getTitle(),
-                        e.getStartDateTime()
-                                .toLocalDate()
-                                .toString(),
-                        e.getLocation(),
-                        "Coordinator", // placeholder
-                        sold + "/" + e.getMaxCapacity()
-                );
+                addEvent(e.getTitle(), e.getStartDateTime().toLocalDate().toString(), e.getLocation(), "Coordinator", sold + "/" + e.getMaxCapacity());
             }
-        }
-        catch (Exception e) {
 
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
 
+    private void loadUsers(List<User> users) {
+
+        userContainer.getChildren().clear();
+
+        for (User u : users) {
+          addUser(u);
         }
     }
 
@@ -137,4 +136,31 @@ public class AdminController {
         eventContainer.getChildren().add(row);
     }
 
+    @FXML
+    private void filterUsers() {
+
+        String search = userSearchField.getText().toLowerCase();
+
+        String role = roleFilter.getValue();
+
+        List<User> filtered = new java.util.ArrayList<>();
+
+        for (User u : allUsers) {
+            boolean matchesSearch = u.getName().toLowerCase().contains(search) || u.getUsername().toLowerCase().contains(search);
+
+            boolean matchesRole = role == null || u.getRole().equals(role);
+
+            if (matchesSearch && matchesRole) {
+                filtered.add(u);
+            }
+        }
+        loadUsers(filtered);
+    }
+
+    @FXML
+    private void clearUserFilters() {
+        userSearchField.clear();
+        roleFilter.setValue(null);
+        loadUsers(allUsers);
+    }
 }
