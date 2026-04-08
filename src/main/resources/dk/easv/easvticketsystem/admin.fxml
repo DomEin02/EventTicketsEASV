@@ -11,8 +11,8 @@
         <HBox spacing="20" alignment="CENTER_LEFT" styleClass="header" style="-fx-padding:15;">
             <Label text="Admin Dashboard" styleClass="headerTitle"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Label text="Logged in as: admin" fx:id="userLabel"/>
-            <Button text="Logout" onAction="#logout"/>
+            <Label text="Logged in as: admin" fx:id="userLabel" styleClass="subtitle"/>
+            <Button text="Logout" onAction="#logout" styleClass="secondary-btn"/>
         </HBox>
     </top>
 
@@ -29,6 +29,22 @@
                     <Button text="+ Create User" onAction="#createUser" styleClass="primary-btn"/>
                 </HBox>
 
+                <HBox spacing="10">
+
+                    <TextField fx:id="userSearchField"
+                               promptText="Search name or username"
+                               onKeyReleased="#filterUsers"/>
+
+                    <ComboBox fx:id="roleFilter"
+                              promptText="Filter role"
+                              onAction="#filterUsers"/>
+
+                    <Button text="Clear"
+                            onAction="#clearUserFilters"
+                            styleClass="secondary-btn"/>
+
+                </HBox>
+
                 <!-- TABLE HEADER -->
                 <HBox spacing="20">
                     <Label text="Name" prefWidth="160"/>
@@ -41,7 +57,15 @@
 
                 <Separator/>
 
-                <VBox fx:id="userContainer" spacing="8"/>
+                <ScrollPane fitToWidth="true" prefHeight="200"
+                            VBox.vgrow="ALWAYS">
+
+                    <content>
+                        <VBox fx:id="userContainer"
+                              spacing="8"/>
+                    </content>
+
+                </ScrollPane>
 
             </VBox>
 

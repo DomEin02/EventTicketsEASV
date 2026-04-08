@@ -2,6 +2,7 @@ package dk.easv.easvticketsystem.model;
 
 public class User {
 
+    private int userId;
     private String name;
     private String username;
     private String email;
@@ -23,6 +24,20 @@ public class User {
     }
 
     //Getters + Setters
+    public User(int userId, String name, String username, String email, String role, String created) {
+
+        this.userId = userId;
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.role = role;
+        this.created = created;
+    }
+
+    public User() {}
+
+    public int getUserId() { return userId; }
+
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -40,8 +55,5 @@ public class User {
 
     public String getCreated() { return created; }
     public void setCreated(String created) { this.created = created; }
-
-    public String getCreatedDate() {return created;
-    }
 
 }
