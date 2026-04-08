@@ -1,5 +1,7 @@
 package dk.easv.easvticketsystem.GUI;
 
+import dk.easv.easvticketsystem.DAL.UserDAO;
+import dk.easv.easvticketsystem.model.Event;
 import dk.easv.easvticketsystem.model.User;
 import dk.easv.easvticketsystem.SceneManager;
 import javafx.fxml.FXML;
@@ -12,6 +14,8 @@ import javafx.scene.layout.VBox;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import dk.easv.easvticketsystem.DAL.EventDAO;
+
+import java.util.List;
 
 public class AdminController {
 
@@ -33,10 +37,12 @@ public class AdminController {
 
             EventDAO eventDAO = new EventDAO();
             List<Event> events = eventDAO.getAllEvents();
-            for (Event e : events) {
-                int sold = eventDAO.getTicketCountForEvent(e.getEventId());
+            eventContainer.getChildren().clear();
 
-                addEvent(e.getTitle(), e.getStartDateTime().toLocalDate().toString(), e.getLocation(), "Coordinator", sold + "/" + e.getMaxCapacity());
+            for (Event e : events) {
+
+                addEvent(e);
+
             }
 
         } catch (Exception e) {
@@ -46,22 +52,6 @@ public class AdminController {
 
     private void loadUsers(List<User> users) {
 
-        // EVENTS – Get from DB
-        try {
-            EventDAO eventDAO = new EventDAO();
-            for (Event event : eventDAO.getAllEvents()) {
-                addEvent(event);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
-            alert.setTitle("Database Error");
-            alert.setHeaderText("Could not get events");
-            alert.setContentText("An error occurred while loading events from the database.:\n" + e.getMessage());
-            alert.showAndWait();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         userContainer.getChildren().clear();
 
         for (User u : users) {

@@ -34,8 +34,6 @@ public class User {
         this.created = created;
     }
 
-    public User() {}
-
     public int getUserId() { return userId; }
 
     public String getName() { return name; }
