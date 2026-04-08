@@ -1,8 +1,10 @@
 package dk.easv.easvticketsystem.GUI;
 
+import dk.easv.easvticketsystem.DAL.UserDAO;
 import dk.easv.easvticketsystem.model.User;
 import dk.easv.easvticketsystem.SceneManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -34,20 +36,34 @@ public class UserEditorController {
 
     @FXML
     private void saveUser() {
+        try {
+            if (selectedUser == null)
+                selectedUser = new User();
 
-        if (selectedUser == null)
-            selectedUser = new User();
+            selectedUser.setName(nameField.getText());
+            selectedUser.setUsername(usernameField.getText());
+            selectedUser.setEmail(emailField.getText());
+            selectedUser.setPassword(passwordField.getText());
+            selectedUser.setRole(roleBox.getValue());
+            selectedUser.setCreated(createdField.getText());
 
-        selectedUser.setName(nameField.getText());
-        selectedUser.setUsername(usernameField.getText());
-        selectedUser.setEmail(emailField.getText());
-        selectedUser.setRole(roleBox.getValue());
-        selectedUser.setCreated(createdField.getText());
+            UserDAO dao = new UserDAO();
+            dao.createUser(selectedUser);
 
-        System.out.println("Saved user: " + selectedUser.getName());
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setHeaderText("User saved successfully!");
+            success.showAndWait();
 
-        selectedUser = null;
-        SceneManager.load("admin.fxml");
+            selectedUser = null;
+            SceneManager.load("admin.fxml");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Could not save user");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     @FXML

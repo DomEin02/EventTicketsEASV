@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnector {
@@ -14,30 +15,35 @@ public class DBConnector {
     private static final String PROP_FILE = "config/config.settings";
     private static SQLServerDataSource dataSource;
 
-    public DBConnector() throws IOException {
+    static {
+        try {
+            Properties databaseProperties = new Properties();
+            databaseProperties.load(new FileInputStream(new File(PROP_FILE)));
 
-        Properties databaseProperties = new Properties();
+            dataSource = new SQLServerDataSource();
+            dataSource.setServerName(databaseProperties.getProperty("Server"));
+            dataSource.setDatabaseName(databaseProperties.getProperty("Database"));
+            dataSource.setUser(databaseProperties.getProperty("User"));
+            dataSource.setPassword(databaseProperties.getProperty("Password"));
+            dataSource.setPortNumber(1433);
+            dataSource.setTrustServerCertificate(true);
 
-        databaseProperties.load(new FileInputStream(new File(PROP_FILE)));
-
-        dataSource = new SQLServerDataSource();
-        dataSource.setServerName(databaseProperties.getProperty("Server"));
-        dataSource.setDatabaseName(databaseProperties.getProperty("Database"));
-        dataSource.setUser(databaseProperties.getProperty("User"));
-        dataSource.setPassword(databaseProperties.getProperty("Password"));
-        dataSource.setPortNumber(1433);
-        dataSource.setTrustServerCertificate(true);
+            System.out.println("DBConnector initialized successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to initialize DBConnector", e);
+        }
     }
 
-    public static Connection getConnection() throws SQLServerException {
+    // Returnerer altid en connection
+    public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
 
+    // Test main
     public static void main(String[] args) throws Exception {
-        DBConnector databaseConnector = new DBConnector();
-
-        try (Connection connection = databaseConnector.getConnection()) {
+        try (Connection connection = DBConnector.getConnection()) {
             System.out.println("Is it open? " + !connection.isClosed());
-        } //Connection gets closed here
+        }
     }
 }
