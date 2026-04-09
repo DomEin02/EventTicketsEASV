@@ -162,8 +162,11 @@ public class CoordinatorController {
         Label l3 = new Label(event.getLocation());
         l3.setPrefWidth(220);
 
-        Label l4 = new Label(tickets);
-        l4.setPrefWidth(100);
+        Label l4 = new Label(event.getNotes());
+        l4.setPrefWidth(120);
+
+        Label l5 = new Label(tickets);
+        l5.setPrefWidth(100);
 
 
         //Edit button
@@ -197,7 +200,7 @@ public class CoordinatorController {
         HBox actions = new HBox(8, edit, delete, ticketsBtn);
         actions.setPrefWidth(180);
 
-        row.getChildren().addAll(l1, l2, l3, l4, actions);
+        row.getChildren().addAll(l1, l2, l3, l4, l5, actions);
 
         eventContainer.getChildren().add(row);
     }

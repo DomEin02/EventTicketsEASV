@@ -6,13 +6,14 @@ import dk.easv.easvticketsystem.model.User;
 import dk.easv.easvticketsystem.SceneManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import dk.easv.easvticketsystem.DAL.EventDAO;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class AdminController {
     @FXML private VBox userContainer;
     @FXML private VBox eventContainer;
     @FXML private Label userLabel;
-    @FXML private javafx.scene.control.TextField userSearchField;
-    @FXML private javafx.scene.control.ComboBox<String> roleFilter;
+    @FXML private TextField userSearchField;
+    @FXML private ComboBox<String> roleFilter;
 
     private List<User> allUsers;
 

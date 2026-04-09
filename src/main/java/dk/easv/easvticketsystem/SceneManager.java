@@ -17,7 +17,7 @@ public class SceneManager {
         try {
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/dk/easv/easvticketsystem/" + fxml));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 1000, 700);
+            Scene scene = new Scene(root, 1160, 700);
             scene.getStylesheets().add(SceneManager.class.getResource("/dk/easv/easvticketsystem/style.css").toExternalForm());
             stage.setScene(scene);
             stage.show();

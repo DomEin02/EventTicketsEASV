@@ -1,82 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="dk.easv.easvticketsystem.GUI.CoordinatorController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/24.0.1" fx:controller="dk.easv.easvticketsystem.GUI.CoordinatorController">
 
     <!-- HEADER -->
     <top>
-        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="header" style="-fx-padding:15;">
-            <Label text="Coordinator Dashboard" styleClass="headerTitle"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Logout" onAction="#logout" styleClass="secondary-btn"/>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding:15;" styleClass="header">
+            <Label styleClass="headerTitle" text="Coordinator Dashboard" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button onAction="#logout" styleClass="secondary-btn" text="Logout" />
         </HBox>
     </top>
 
     <!-- CONTENT -->
     <center>
-        <VBox spacing="25" style="-fx-padding: 25;">
+        <VBox prefHeight="562.0" prefWidth="1127.0" spacing="25" style="-fx-padding: 25;">
 
             <!-- EVENTS CARD -->
             <VBox spacing="10" styleClass="card">
 
                 <HBox alignment="CENTER_LEFT">
-                    <Label text="My Events" styleClass="title"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <Button text="+ Create Event" onAction="#createEvent" styleClass="primary-btn"/>
+                    <Label styleClass="title" text="My Events" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button onAction="#createEvent" styleClass="primary-btn" text="+ Create Event" />
                 </HBox>
 
                 <HBox spacing="10">
 
                     <!-- Search text -->
-                    <TextField fx:id="searchField"
-                               promptText="Search title or location"
-                               onKeyReleased="#filterEvents"/>
+                    <TextField fx:id="searchField" onKeyReleased="#filterEvents" promptText="Search title or location" />
 
                     <!-- Date filter -->
-                    <DatePicker fx:id="dateFilter"
-                                onAction="#filterEvents"/>
+                    <DatePicker fx:id="dateFilter" onAction="#filterEvents" />
 
                     <!-- Location filter -->
-                    <TextField fx:id="locationFilter"
-                               promptText="Filter location"
-                               onKeyReleased="#filterEvents"/>
+                    <TextField fx:id="locationFilter" onKeyReleased="#filterEvents" promptText="Filter location" />
 
                     <!-- Capacity filter -->
-                    <TextField fx:id="capacityFilter"
-                               promptText="Min capacity"
-                               onKeyReleased="#filterEvents"/>
+                    <TextField fx:id="capacityFilter" onKeyReleased="#filterEvents" promptText="Min capacity" />
 
                     <!-- Future events only -->
-                    <CheckBox fx:id="futureCheck"
-                              text="Future only"
-                              onAction="#filterEvents"/>
+                    <CheckBox fx:id="futureCheck" onAction="#filterEvents" text="Future only" />
 
                     <!-- CLEAR BUTTON -->
-                    <Button text="Clear Filters"
-                            onAction="#clearFilters"
-                            styleClass="secondary-btn"/>
+                    <Button onAction="#clearFilters" prefHeight="26.0" prefWidth="100.0" styleClass="secondary-btn" text="Clear Filters">
+                  <HBox.margin>
+                     <Insets left="182.0" />
+                  </HBox.margin></Button>
 
                 </HBox>
 
                 <!-- TABLE HEADER -->
                 <HBox spacing="20">
-                    <Label text="Title" prefWidth="180"/>
-                    <Label text="Date" prefWidth="120"/>
-                    <Label text="Location" prefWidth="220"/>
-                    <Label text="Tickets" prefWidth="100"/>
-                    <Label text="Actions" prefWidth="120"/>
+                    <Label prefWidth="184" text="Title" />
+                    <Label prefWidth="118" text="Date" />
+                    <Label prefWidth="220" text="Location" />
+               <Label layoutX="350.0" layoutY="10.0" prefWidth="120" text="Notes" />
+                    <Label prefWidth="105" text="Tickets" />
+                    <Label prefWidth="120" text="Actions" />
                 </HBox>
 
-                <Separator/>
+                <Separator />
 
                 <!-- EVENTS LIST -->
                 <ScrollPane fitToWidth="true" prefHeight="400">
 
-                    <VBox fx:id="eventContainer"
-                          spacing="8"/>
+                    <VBox fx:id="eventContainer" spacing="8" />
 
                 </ScrollPane>
 

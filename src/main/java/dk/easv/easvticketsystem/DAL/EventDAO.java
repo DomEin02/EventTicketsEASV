@@ -15,13 +15,16 @@ public class EventDAO {
     }
 
     public int createEvent(Event event) throws Exception {
-        String sql = "INSERT INTO Events (title, start_datetime, location, max_capacity) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Events (title, start_datetime, location, notes, max_capacity) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DBConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, event.getTitle());
             stmt.setTimestamp(2, java.sql.Timestamp.valueOf(event.getStartDateTime()));
             stmt.setString(3, event.getLocation());
-            stmt.setInt(4, event.getMaxCapacity());
+            String notes = event.getNotes();
+            if (notes == null) notes ="";
+            stmt.setString(4, notes);
+            stmt.setInt(5, event.getMaxCapacity());
 
             stmt.executeUpdate();
 
@@ -67,7 +70,7 @@ public class EventDAO {
     public void updateEvent(Event event)
             throws Exception {
 
-        String sql = "UPDATE Events " + "SET title = ?, " + "start_datetime = ?, " + "location = ?, " + "max_capacity = ? " + "WHERE event_id = ?";
+        String sql = "UPDATE Events " + "SET title = ?, " + "start_datetime = ?, " + "location = ?, "+ "notes = ?, " + "max_capacity = ? " + "WHERE event_id = ?";
 
         try (Connection conn = DBConnector.getConnection();
 
@@ -75,8 +78,9 @@ public class EventDAO {
             stmt.setString(1, event.getTitle());
             stmt.setTimestamp(2, java.sql.Timestamp.valueOf(event.getStartDateTime()));
             stmt.setString(3, event.getLocation());
-            stmt.setInt(4, event.getMaxCapacity());
-            stmt.setInt(5, event.getEventId());
+            stmt.setString(4, event.getNotes());
+            stmt.setInt(5, event.getMaxCapacity());
+            stmt.setInt(6, event.getEventId());
             stmt.executeUpdate();
         }
     }
