@@ -54,4 +54,9 @@ public class User {
     public String getCreated() { return created; }
     public void setCreated(String created) { this.created = created; }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }
