@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="dk.easv.easvticketsystem.GUI.AssignCoordinatorController" alignment="CENTER" spacing="15">
+
+    <VBox spacing="12" maxWidth="320" styleClass="card">
+
+        <Label text="Assign Coordinator" styleClass="title"/>
+
+        <ComboBox fx:id="coordinatorCombo" promptText="Select Coordinator"/>
+
+        <HBox spacing="10">
+
+            <Button text="Cancel"
+                    onAction="#cancel"
+                    styleClass="secondary-btn"/>
+
+            <Button text="Assign"
+                    onAction="#assign"
+                    styleClass="primary-btn"/>
+
+        </HBox>
+
+    </VBox>
+
+</VBox>
