@@ -1,7 +1,7 @@
 package dk.easv.easvticketsystem.GUI;
 
-import dk.easv.easvticketsystem.DAL.EventCoordinatorDAO;
-import dk.easv.easvticketsystem.DAL.UserDAO;
+import dk.easv.easvticketsystem.BLL.CoordinatorManager;
+import dk.easv.easvticketsystem.BLL.UserManager;
 import dk.easv.easvticketsystem.SceneManager;
 import dk.easv.easvticketsystem.model.Event;
 import dk.easv.easvticketsystem.model.User;
@@ -21,8 +21,8 @@ public class AssignCoordinatorController {
     public void initialize() {
 
         try {
-            UserDAO dao = new UserDAO();
-            List<User> users = dao.getAllUsers();
+            UserManager manager = new UserManager();
+            List<User> users = manager.getAllUsers();
             for (User u : users) {
                 if (u.getRole().equals("Coordinator")) {
                     coordinatorCombo.getItems().add(u);
@@ -40,8 +40,9 @@ public class AssignCoordinatorController {
             User selected = coordinatorCombo.getValue();
 
             if (selected != null) {
-                EventCoordinatorDAO dao = new EventCoordinatorDAO();
-                dao.assignCoordinator(selectedEvent.getEventId(), selected.getUserId());
+                CoordinatorManager manager = new CoordinatorManager();
+
+                manager.assignCoordinator(selectedEvent.getEventId(), selected.getUserId());
             }
             SceneManager.load("admin.fxml");
         }

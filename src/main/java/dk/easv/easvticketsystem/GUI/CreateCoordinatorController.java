@@ -1,6 +1,6 @@
 package dk.easv.easvticketsystem.GUI;
 
-import dk.easv.easvticketsystem.DAL.UserDAO;
+import dk.easv.easvticketsystem.BLL.UserManager;
 import dk.easv.easvticketsystem.SceneManager;
 import dk.easv.easvticketsystem.model.User;
 import javafx.fxml.FXML;
@@ -49,8 +49,8 @@ public class CreateCoordinatorController {
 
             User user = new User(name, username, email, password, role, created);
 
-            UserDAO dao = new UserDAO();
-            dao.createUser(user);
+            UserManager manager = new UserManager();
+            manager.createUser(user);
 
             Alert success = new Alert(Alert.AlertType.INFORMATION);
             success.setHeaderText("Coordinator created successfully!");

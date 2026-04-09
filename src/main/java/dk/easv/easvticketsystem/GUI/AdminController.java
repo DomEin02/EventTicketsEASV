@@ -1,7 +1,8 @@
 package dk.easv.easvticketsystem.GUI;
 
-import dk.easv.easvticketsystem.DAL.EventCoordinatorDAO;
-import dk.easv.easvticketsystem.DAL.UserDAO;
+import dk.easv.easvticketsystem.BLL.CoordinatorManager;
+import dk.easv.easvticketsystem.BLL.EventManager;
+import dk.easv.easvticketsystem.BLL.UserManager;
 import dk.easv.easvticketsystem.model.Event;
 import dk.easv.easvticketsystem.model.User;
 import dk.easv.easvticketsystem.SceneManager;
@@ -12,12 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import dk.easv.easvticketsystem.DAL.EventDAO;
 
 import java.util.List;
 
@@ -34,19 +29,20 @@ public class AdminController {
     @FXML
     public void initialize() {
         try {
-            UserDAO dao = new UserDAO();
-            allUsers = dao.getAllUsers();
+
+            UserManager userManager = new UserManager();
+            allUsers = userManager.getAllUsers();
             loadUsers(allUsers);
+
             roleFilter.getItems().addAll("Admin", "Coordinator");
 
-            EventDAO eventDAO = new EventDAO();
-            List<Event> events = eventDAO.getAllEvents();
+            EventManager eventManager = new EventManager();
+            List<Event> events = eventManager.getAllEvents();
+
             eventContainer.getChildren().clear();
 
             for (Event e : events) {
-
                 addEvent(e);
-
             }
 
         } catch (Exception e) {
@@ -137,9 +133,9 @@ public class AdminController {
 
         String coordinatorName = "Not Assigned";
         try {
-            EventCoordinatorDAO dao = new EventCoordinatorDAO();
+            CoordinatorManager manager = new CoordinatorManager();
 
-            coordinatorName = dao.getCoordinatorName(event.getEventId());
+            coordinatorName = manager.getCoordinatorName(event.getEventId());
         }
         catch (Exception ex) {
 
@@ -166,7 +162,7 @@ public class AdminController {
         delete.setOnAction(e -> {
 
             try {
-                new EventDAO().deleteEvent(event.getEventId());
+                new EventManager().deleteEvent(event.getEventId());
                 eventContainer.getChildren().remove(row);
 
             }
@@ -181,13 +177,7 @@ public class AdminController {
                 alert.setContentText(ex.getMessage());
                 alert.showAndWait();
             }
-        });
 
-        Button edit = new Button("Edit");
-        edit.getStyleClass().add("secondary-btn");
-        edit.setOnAction(e -> {
-            EventEditorController.selectedEvent = event;
-            SceneManager.load("eventeditor.fxml");
         });
 
         HBox actions = new HBox(8, assign, delete);
