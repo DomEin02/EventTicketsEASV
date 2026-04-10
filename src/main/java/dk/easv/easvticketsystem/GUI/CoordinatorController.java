@@ -6,13 +6,14 @@ import dk.easv.easvticketsystem.model.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.image.ImageView;
 
 public class CoordinatorController {
 
@@ -175,7 +176,19 @@ public class CoordinatorController {
         edit.setOnAction(e ->openEditor(event));
 
         //Delete button
-        Button delete = new Button("Delete");
+        Button delete = new Button("");
+
+        //Load Icon
+        Image image = new Image(getClass().getResource("/icons/delete.png").toExternalForm());
+        ImageView icon = new ImageView(image);
+
+        //Icon size
+        icon.setFitWidth(16);
+        icon.setFitHeight(16);
+        icon.setPreserveRatio(true);
+
+        //Icon on button
+        delete.setGraphic(icon);
         delete.getStyleClass().add("secondary-btn");
         delete.setOnAction(e -> {
             try {
