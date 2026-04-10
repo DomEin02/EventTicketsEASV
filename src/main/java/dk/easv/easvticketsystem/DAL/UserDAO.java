@@ -10,8 +10,7 @@ import java.sql.PreparedStatement;
 
 public class UserDAO {
 
-    public UserDAO() throws Exception {
-        new DBConnector();
+    public UserDAO() {
     }
 
     //Get all users

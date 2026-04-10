@@ -1,6 +1,6 @@
 package dk.easv.easvticketsystem.GUI;
 
-import dk.easv.easvticketsystem.DAL.EventDAO;
+import dk.easv.easvticketsystem.BLL.EventManager;
 import dk.easv.easvticketsystem.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -81,14 +81,14 @@ public class EventEditorController {
             }
 
             //Save in DB
-            EventDAO eventDAO = new EventDAO();
+            EventManager manager = new EventManager();
 
             if (selectedEvent != null) {
                 selectedEvent.setTitle(title);
                 selectedEvent.setStartDateTime(startDateTime);
                 selectedEvent.setLocation(location);
                 selectedEvent.setMaxCapacity(maxTickets);
-                eventDAO.updateEvent(selectedEvent);
+                manager.updateEvent(selectedEvent);
             } else {
                 Event newEvent = new Event(
                         0, title,
@@ -98,7 +98,7 @@ public class EventEditorController {
                         "",
                         "",
                         maxTickets);
-                int generatedId = eventDAO.createEvent(newEvent);
+                int generatedId = manager.createEvent(newEvent);
                 newEvent.setEventId(generatedId);
             }
 

@@ -1,6 +1,6 @@
 package dk.easv.easvticketsystem.GUI;
 
-import dk.easv.easvticketsystem.DAL.EventDAO;
+import dk.easv.easvticketsystem.BLL.EventManager;
 import dk.easv.easvticketsystem.SceneManager;
 import dk.easv.easvticketsystem.model.Event;
 import javafx.fxml.FXML;
@@ -29,8 +29,8 @@ public class CoordinatorController {
     @FXML
     public void initialize() {
         try {
-            EventDAO dao = new EventDAO();
-            allEvents = dao.getAllEvents();
+            EventManager manager = new EventManager();
+            allEvents = manager.getAllEvents();
             loadEvents(allEvents);
         }
         catch (Exception e) {
@@ -45,11 +45,11 @@ public class CoordinatorController {
         eventContainer.getChildren().clear();
 
         try {
-            EventDAO dao = new EventDAO();
+            EventManager manager = new EventManager();
 
             for (Event e : events) {
 
-                int sold = dao.getTicketCountForEvent(e.getEventId());
+                int sold = manager.getTicketCount(e.getEventId());
 
                 addEvent(e, sold + "/" + e.getMaxCapacity());
             }
@@ -192,8 +192,8 @@ public class CoordinatorController {
         delete.getStyleClass().add("secondary-btn");
         delete.setOnAction(e -> {
             try {
-                EventDAO dao = new EventDAO();
-                dao.deleteEvent(event.getEventId());   // Slet fra DB
+                EventManager manager = new EventManager();
+                manager.deleteEvent(event.getEventId());   // Slet fra DB
                 eventContainer.getChildren().remove(row); // Fjern fra GUI
             } catch (Exception ex) {
                 ex.printStackTrace();

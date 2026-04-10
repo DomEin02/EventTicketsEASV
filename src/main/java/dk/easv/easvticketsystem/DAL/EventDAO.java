@@ -10,8 +10,7 @@ import java.util.List;
 
 public class EventDAO {
 
-    public EventDAO() throws Exception {
-        new DBConnector();
+    public EventDAO(){
     }
 
     public int createEvent(Event event) throws Exception {
