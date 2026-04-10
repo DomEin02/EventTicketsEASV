@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d58197c4-2496-4415-83f4-002495b8506b" name="Changes" comment="DB works and some UI stuff on coord dashboard">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.example" beforeDir="false" />
+    <list default="true" id="d58197c4-2496-4415-83f4-002495b8506b" name="Changes" comment="Delete icon on coord dashboard">
       <change beforePath="$PROJECT_DIR$/src/main/java/dk/easv/easvticketsystem/GUI/CoordinatorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dk/easv/easvticketsystem/GUI/CoordinatorController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -129,7 +127,7 @@
       <workItem from="1771406400962" duration="17405000" />
       <workItem from="1771490631610" duration="10291000" />
       <workItem from="1771520841517" duration="646000" />
-      <workItem from="1775491792303" duration="36393000" />
+      <workItem from="1775491792303" duration="38501000" />
     </task>
     <task id="LOCAL-00001" summary="Get events from DB + open Eventeditor and get events">
       <option name="closed" value="true" />
@@ -163,7 +161,23 @@
       <option name="project" value="LOCAL" />
       <updated>1775752867696</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Delete icon on coord dashboard">
+      <option name="closed" value="true" />
+      <created>1775810462283</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1775810462283</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Delete icon on coord dashboard">
+      <option name="closed" value="true" />
+      <created>1775810491715</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1775810491715</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,6 +188,7 @@
     <MESSAGE value="Get events from DB + open Eventeditor and get events 2" />
     <MESSAGE value="create event og user" />
     <MESSAGE value="DB works and some UI stuff on coord dashboard" />
-    <option name="LAST_COMMIT_MESSAGE" value="DB works and some UI stuff on coord dashboard" />
+    <MESSAGE value="Delete icon on coord dashboard" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete icon on coord dashboard" />
   </component>
 </project>

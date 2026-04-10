@@ -1,6 +1,7 @@
 package dk.easv.easvticketsystem.GUI;
 
 import dk.easv.easvticketsystem.BLL.EventManager;
+import dk.easv.easvticketsystem.DAL.EventDAO;
 import dk.easv.easvticketsystem.SceneManager;
 import dk.easv.easvticketsystem.model.Event;
 import javafx.fxml.FXML;
@@ -171,9 +172,20 @@ public class CoordinatorController {
 
 
         //Edit button
-        Button edit = new Button("Edit");
+        Button edit = new Button("");
+
+        //Load edit icon
+        Image editImage = new Image(getClass().getResource("/icons/edit.png").toExternalForm());
+        ImageView editImageView = new ImageView(editImage);
+
+        editImageView.setFitWidth(16);
+        editImageView.setFitHeight(16);
+        editImageView.setPreserveRatio(true);
+
+        edit.setGraphic(editImageView);
         edit.getStyleClass().add("secondary-btn");
         edit.setOnAction(e ->openEditor(event));
+
 
         //Delete button
         Button delete = new Button("");
