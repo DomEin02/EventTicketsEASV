@@ -37,6 +37,11 @@
     -fx-padding: 8;
 }
 
+.text-field:hover {
+    -fx-border-color: #4f46e5;
+    -fx-background-color: #0f172a;
+}
+
 /* buttons */
 .primary-btn {
     -fx-background-color: linear-gradient(to right,#2563eb,#4f46e5);
@@ -102,7 +107,7 @@
     -fx-background-color: transparent;
 }
 
-/* Fjern border på indre textfield */
+/* Removes border on inner textfield */
 .date-picker .text-field {
     -fx-border-width: 0;
     -fx-background-insets: 0;
@@ -125,12 +130,12 @@
     -fx-text-fill: #94a3b8; /* lidt dæmpet */
 }
 
-/* hover på dato */
+/* hover on date */
 .date-picker-popup .cell:hover {
     -fx-background-color: #334155;
 }
 
-/* valgt dato */
+/* Picked date */
 .date-picker-popup .cell:selected {
     -fx-background-color: #2563eb;
     -fx-text-fill: white;
@@ -163,8 +168,29 @@
     -fx-text-fill: white;
 }
 
+.date-picker {
+    -fx-background-color: #0f172a;
+    -fx-border-color: #334155;
+}
+
+.date-picker:hover {
+    -fx-border-color: #4f46e5;
+}
+
 .check-box {
     -fx-text-fill: white;
+}
+
+.check-box .box {
+    -fx-background-color: #0f172a;
+    -fx-border-color: #334155;
+    -fx-border-radius: 4;
+    -fx-effect: none;
+    -fx-background-insets: 0;
+}
+
+.check-box:hover .box {
+    -fx-border-color: #4f46e5;
 }
 
 .scroll-bar:vertical {

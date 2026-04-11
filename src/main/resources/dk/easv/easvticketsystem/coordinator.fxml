@@ -52,7 +52,7 @@
                     <TextField fx:id="capacityFilter" onKeyReleased="#filterEvents" promptText="Min capacity" />
 
                     <!-- Future events only -->
-                    <CheckBox fx:id="futureCheck" onAction="#filterEvents" text="Future only" />
+                    <CheckBox fx:id="futureCheck" onAction="#filterEvents" text="Future events" prefWidth="120"/>
 
                     <!-- CLEAR BUTTON -->
                     <Button onAction="#clearFilters" prefHeight="26.0" prefWidth="100.0" styleClass="secondary-btn" text="Clear Filters">
