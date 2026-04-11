@@ -43,6 +43,25 @@
 }
 
 /* buttons */
+
+.create-btn {
+    -fx-background-color: #45e545;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-padding: 8 14 8 14;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0, 0, 2);
+}
+
+.create-btn:hover {
+    -fx-background-color: #22c55e;
+    -fx-effect: dropshadow(gaussian, rgba(79,70,229,0.35), 10, 0, 0, 3);
+}
+
+.create-btn:hover {
+    -fx-border-color: #4f46e5;
+}
+
 .primary-btn {
     -fx-background-color: linear-gradient(to right,#2563eb,#4f46e5);
     -fx-text-fill: white;

@@ -34,7 +34,7 @@
                 <HBox alignment="CENTER_LEFT">
                     <Label styleClass="title" text="My Events" />
                     <Region HBox.hgrow="ALWAYS" />
-                    <Button onAction="#createEvent" styleClass="primary-btn" text="+ Create Event" />
+                    <Button onAction="#createEvent" styleClass="create-btn" text="+ Create Event" />
                 </HBox>
 
                 <HBox spacing="10">

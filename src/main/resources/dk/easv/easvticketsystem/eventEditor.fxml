@@ -13,7 +13,7 @@
 
         <!-- EVENT INFO -->
         <TextField fx:id="titleField" promptText="Event Title"/>
-        <TextField fx:id="dateField" promptText="Date (yyyy-mm-dd)"/>
+        <DatePicker fx:id="datePicker" promptText="Date"/>
         <TextField fx:id="timeField" promptText="Time (hh:mm)"/>
         <TextField fx:id="locationField" promptText="Location"/>
         <TextField fx:id="maxTicketsField" promptText="Max tickets"/>

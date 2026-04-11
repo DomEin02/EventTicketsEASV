@@ -4,9 +4,13 @@ import dk.easv.easvticketsystem.BLL.EventManager;
 import dk.easv.easvticketsystem.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import dk.easv.easvticketsystem.model.Event;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class EventEditorController {
 
@@ -15,7 +19,7 @@ public class EventEditorController {
     @FXML
     private TextField titleField;
     @FXML
-    private TextField dateField;
+    private DatePicker datePicker;
     @FXML
     private TextField timeField;
     @FXML
@@ -27,7 +31,7 @@ public class EventEditorController {
     public void initialize() {
         if (selectedEvent != null) {
             titleField.setText(selectedEvent.getTitle());
-            dateField.setText(selectedEvent.getStartDateTime().toLocalDate().toString());
+            datePicker.setValue(selectedEvent.getStartDateTime().toLocalDate());
             timeField.setText(selectedEvent.getStartDateTime().toLocalTime().toString());
             locationField.setText(selectedEvent.getLocation());
             maxTicketsField.setText(String.valueOf(selectedEvent.getMaxCapacity()));
@@ -40,13 +44,13 @@ public class EventEditorController {
         try {
             //Get input
             String title = titleField.getText();
-            String date = dateField.getText();
+            LocalDate date = datePicker.getValue();
             String time = timeField.getText();
             String location = locationField.getText();
             String maxTicketsStr = maxTicketsField.getText().trim();
 
             //Check empty fields
-            if (title.isEmpty() || date.isEmpty() || time.isEmpty() || location.isEmpty() || maxTicketsStr.isEmpty()) {
+            if (title.isEmpty() || date == null || time.isEmpty() || location.isEmpty() || maxTicketsStr.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Input Error");
                 alert.setHeaderText("All fields must be filled in");
@@ -70,12 +74,13 @@ public class EventEditorController {
             //Parse date and time
             LocalDateTime startDateTime;
             try {
-                startDateTime = LocalDateTime.parse(date + "T" + time + ":00");
+                LocalTime timeParsed = LocalTime.parse(time);
+                startDateTime = LocalDateTime.of(date, timeParsed);
             } catch (Exception ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Input Error");
                 alert.setHeaderText("Invalid date or time format");
-                alert.setContentText("Expected format: YYYY-MM-DD for date and HH:MM for time");
+                alert.setContentText("Invalid date or time format");
                 alert.showAndWait();
                 return;
             }
