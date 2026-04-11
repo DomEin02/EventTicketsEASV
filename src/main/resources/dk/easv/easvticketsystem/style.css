@@ -98,6 +98,66 @@
     -fx-background-radius: 10;
 }
 
+.date-picker .arrow-button {
+    -fx-background-color: transparent;
+}
+
+/* Fjern border på indre textfield */
+.date-picker .text-field {
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
+}
+
+.date-picker-popup .cell {
+    -fx-background-color: #334155;
+    -fx-text-fill: white;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
+
+.date-picker-popup .day-name-cell {
+    -fx-background-color: #0f172a;
+    -fx-text-fill: white;
+}
+
+.date-picker-popup .week-number-cell {
+    -fx-background-color: #0f172a;
+    -fx-text-fill: #94a3b8; /* lidt dæmpet */
+}
+
+/* hover på dato */
+.date-picker-popup .cell:hover {
+    -fx-background-color: #334155;
+}
+
+/* valgt dato */
+.date-picker-popup .cell:selected {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+}
+
+.date-picker-popup .cell:today {
+    -fx-border-color: #4f46e5;
+    -fx-border-width: 1;
+}
+
+.date-picker-popup {
+    -fx-background-color: #0f172a;
+}
+
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #0f172a;
+}
+
+.date-picker-popup .calendar-grid {
+    -fx-background-color: #0f172a;
+}
+
+.date-picker {
+    -fx-background-color: #0f172a;
+    -fx-background-insets: 0;
+}
+
 .date-picker .text-field {
     -fx-background-color: #0f172a;
     -fx-text-fill: white;
