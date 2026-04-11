@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="dk.easv.easvticketsystem.GUI.UserManagementController"
+            styleClass="root">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox spacing="20"
+              alignment="CENTER_LEFT"
+              styleClass="header"
+              style="-fx-padding:15;">
+
+            <Label text="User Management" styleClass="headerTitle"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label text="Logged in as: admin" styleClass="subtitle"/>
+
+            <Button text="Logout"
+                    onAction="#logout"
+                    styleClass="secondary-btn"/>
+
+        </HBox>
+    </top>
+
+    <!-- CENTER CONTENT -->
+    <center>
+        <VBox spacing="10" styleClass="card" style="-fx-padding: 25;">
+
+            <!-- TITLE + CREATE BUTTON -->
+            <HBox alignment="CENTER_LEFT">
+
+                <Label text="User Management" styleClass="title"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Button text="+ Create User"
+                        onAction="#createUser"
+                        styleClass="primary-btn"/>
+
+            </HBox>
+
+            <!-- FILTERS -->
+            <HBox spacing="10">
+
+                <TextField fx:id="userSearchField"
+                           promptText="Search name or username"
+                           onKeyReleased="#filterUsers"/>
+
+                <ComboBox fx:id="roleFilter"
+                          promptText="Filter role"
+                          onAction="#filterUsers"/>
+
+                <Button text="Clear"
+                        onAction="#clearUserFilters"
+                        styleClass="secondary-btn"/>
+
+            </HBox>
+
+            <!-- TABLE HEADER -->
+            <HBox spacing="20">
+                <Label text="Name" prefWidth="160"/>
+                <Label text="Username" prefWidth="120"/>
+                <Label text="Email" prefWidth="200"/>
+                <Label text="Role" prefWidth="120"/>
+                <Label text="Created" prefWidth="120"/>
+                <Label text="Actions" prefWidth="140"/>
+            </HBox>
+
+            <Separator/>
+
+            <!-- USER LIST -->
+            <ScrollPane fitToWidth="true"
+                        prefHeight="200"
+                        VBox.vgrow="ALWAYS">
+
+                <content>
+                    <VBox fx:id="userContainer" spacing="8"/>
+                </content>
+
+            </ScrollPane>
+
+        </VBox>
+    </center>
+
+</BorderPane>

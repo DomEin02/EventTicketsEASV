@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="dk.easv.easvticketsystem.GUI.EventsOverviewController"
+      spacing="25"
+      style="-fx-padding: 25;">
+
+<VBox spacing="10" styleClass="card">
+
+    <Button text="Logout"
+            onAction="#logout"
+            styleClass="secondary-btn"/>
+
+    <Label text="Events Overview" styleClass="title"/>
+
+    <!-- TABLE HEADER -->
+    <HBox spacing="20">
+        <Label text="Title" prefWidth="180"/>
+        <Label text="Date" prefWidth="120"/>
+        <Label text="Location" prefWidth="220"/>
+        <Label text="Coordinator" prefWidth="140"/>
+        <Label text="Tickets" prefWidth="100"/>
+        <Label text="Actions" prefWidth="120"/>
+    </HBox>
+
+    <Separator/>
+
+    <!-- EVENTS LIST -->
+    <VBox fx:id="eventContainer" spacing="8"/>
+
+</VBox>
+
+</VBox>

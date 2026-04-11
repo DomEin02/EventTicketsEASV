@@ -15,13 +15,20 @@ public class LoginController {
     @FXML
     private void login() {
 
-        if (username.getText().equalsIgnoreCase("admin"))
-            SceneManager.load("admin.fxml");
+        String user = username.getText().trim().toLowerCase();
+        String pass = password.getText().trim();
 
-        else if (username.getText().equalsIgnoreCase("coord"))
+        if (user.equals("admin")) {
+
+            SceneManager.load("AdminDashboard.fxml");
+
+        } else if (user.equals("coord")) {
+
             SceneManager.load("coordinator.fxml");
 
-        else
+        } else {
+
             info.setText("Unknown user");
+        }
     }
 }
