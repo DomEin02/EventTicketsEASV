@@ -28,7 +28,7 @@
     <center>
         <VBox prefHeight="562.0" prefWidth="1127.0" spacing="25" style="-fx-padding: 25;">
 
-            <!-- EVENTS CARD -->e
+            <!-- EVENTS CARD -->
             <VBox spacing="10" styleClass="card">
 
                 <HBox alignment="CENTER_LEFT">

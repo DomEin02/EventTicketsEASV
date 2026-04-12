@@ -259,3 +259,37 @@
     -fx-font-size: 18px;
     -fx-font-weight: bold;
 }
+
+.combo-box {
+    -fx-background-color: #0f172a;
+    -fx-border-color: #334155;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #94a3b8;
+    -fx-background-color: transparent;
+}
+
+.combo-box:hover {
+    -fx-border-color: #4f46e5;
+}
+
+.combo-box .list-view {
+    -fx-background-color: #0f172a;
+}
+
+.combo-box .list-view .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: #1e293b;
+}
+
+.combo-box .list-view .list-cell:hover {
+    -fx-background-color: #334155;
+}
+
+.combo-box .list-view .list-cell:selected {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+}
