@@ -11,7 +11,7 @@
 
     <VBox spacing="12" maxWidth="420" styleClass="card">
 
-        <Label text="Create Coordinator" styleClass="title"/>
+        <Label text="Create User" styleClass="title"/>
 
         <!-- BASIC INFO -->
         <TextField fx:id="nameField" promptText="Full name"/>
@@ -21,15 +21,10 @@
 
         <!-- ROLE -->
         <ComboBox fx:id="roleBox">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Coordinator"/>
-                </FXCollections>
-            </items>
         </ComboBox>
 
-        <!-- CREATED DATE -->
-        <TextField fx:id="createdField" promptText="Created date (yyyy-mm-dd)"/>
+        <!-- DATEPICKER -->
+        <DatePicker fx:id="createdDatePicker" promptText="Created date"/>
 
         <!-- ACTIONS -->
         <HBox spacing="10">

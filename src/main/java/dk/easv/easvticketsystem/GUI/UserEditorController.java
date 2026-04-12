@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import java.time.LocalDate;
 
 public class UserEditorController {
 
@@ -30,7 +31,11 @@ public class UserEditorController {
             usernameField.setText(selectedUser.getUsername());
             emailField.setText(selectedUser.getEmail());
             roleBox.setValue(selectedUser.getRole());
-            createdField.setText(selectedUser.getCreated());
+            createdField.setText(
+                    selectedUser.getCreated() != null
+                            ? selectedUser.getCreated().toString()
+                            : ""
+            );
         }
     }
 
@@ -45,7 +50,11 @@ public class UserEditorController {
             selectedUser.setEmail(emailField.getText());
             selectedUser.setPassword(passwordField.getText());
             selectedUser.setRole(roleBox.getValue());
-            selectedUser.setCreated(createdField.getText());
+            LocalDate created = createdField.getText().isEmpty()
+                    ? LocalDate.now()
+                    : LocalDate.parse(createdField.getText());
+
+            selectedUser.setCreated(created);
 
             UserDAO dao = new UserDAO();
             dao.createUser(selectedUser);
@@ -69,6 +78,6 @@ public class UserEditorController {
     @FXML
     private void cancel() {
         selectedUser = null;
-        SceneManager.load("admin.fxml");
+        SceneManager.load("UserManagement.fxml");
     }
 }

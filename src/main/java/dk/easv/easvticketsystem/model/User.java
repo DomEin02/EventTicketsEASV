@@ -1,5 +1,7 @@
 package dk.easv.easvticketsystem.model;
 
+import java.time.LocalDate;
+
 public class User {
 
     private int userId;
@@ -8,13 +10,13 @@ public class User {
     private String email;
     private String password;
     private String role;
-    private String created;
+    private LocalDate created;
 
     //Constructor without parameter
     public User() {}
 
     //Constructor
-    public User(String name, String username, String email, String password, String role, String created) {
+    public User(String name, String username, String email, String password, String role, LocalDate created) {
         this.name = name;
         this.username = username;
         this.email = email;
@@ -24,7 +26,7 @@ public class User {
     }
 
     //Getters + Setters
-    public User(int userId, String name, String username, String email, String role, String created) {
+    public User(int userId, String name, String username, String email, String role, LocalDate created) {
 
         this.userId = userId;
         this.name = name;
@@ -51,12 +53,12 @@ public class User {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
-    public String getCreated() { return created; }
-    public void setCreated(String created) { this.created = created; }
-
+    public LocalDate getCreated() {
+        return created;}
+    public void setCreated(LocalDate created) {
+        this.created = created;}
     @Override
     public String toString() {
         return name;
     }
-
 }

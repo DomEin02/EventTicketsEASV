@@ -3,6 +3,7 @@ package dk.easv.easvticketsystem.DAL;
 import dk.easv.easvticketsystem.model.User;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
@@ -32,7 +33,7 @@ public class UserDAO {
                         rs.getString("username"),
                         rs.getString("email"),
                         rs.getString("role"),
-                        rs.getDate("created_date").toString()
+                        rs.getDate("created_date").toLocalDate()
                 );
 
                 users.add(user);
@@ -59,7 +60,10 @@ public class UserDAO {
             stmt.setString(4, user.getPassword());
             stmt.setString(5, user.getRole());
             stmt.setDate(6,
-                    Date.valueOf(user.getCreated()));
+                    user.getCreated() != null
+                            ? Date.valueOf(user.getCreated())
+                            : Date.valueOf(LocalDate.now())
+            );
 
             stmt.executeUpdate();
         }

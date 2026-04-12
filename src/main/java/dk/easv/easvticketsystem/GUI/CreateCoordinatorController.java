@@ -4,10 +4,9 @@ import dk.easv.easvticketsystem.BLL.UserManager;
 import dk.easv.easvticketsystem.SceneManager;
 import dk.easv.easvticketsystem.model.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+
+import java.time.LocalDate;
 
 public class CreateCoordinatorController {
 
@@ -22,12 +21,13 @@ public class CreateCoordinatorController {
     @FXML
     private ComboBox<String> roleBox;
     @FXML
-    private TextField createdField;
+    private DatePicker createdDatePicker;
 
     @FXML
     public void initialize() {
         roleBox.getItems().addAll("Coordinator", "Admin");
         roleBox.setValue("Coordinator");
+        createdDatePicker.setValue(LocalDate.now());
     }
 
     @FXML
@@ -38,7 +38,7 @@ public class CreateCoordinatorController {
             String email = emailField.getText();
             String password = passwordField.getText();
             String role = roleBox.getValue();
-            String created = createdField.getText();
+            LocalDate created = createdDatePicker.getValue();
 
             if (name.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -56,7 +56,7 @@ public class CreateCoordinatorController {
             success.setHeaderText("Coordinator created successfully!");
             success.showAndWait();
 
-            SceneManager.load("admin.fxml");
+            SceneManager.load("UserManagement.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,6 +69,6 @@ public class CreateCoordinatorController {
 
         @FXML
         private void cancel () {
-            SceneManager.load("admin.fxml");
+            SceneManager.load("UserManagement.fxml");
         }
     }

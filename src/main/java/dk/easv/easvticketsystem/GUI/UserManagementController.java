@@ -72,7 +72,11 @@ public class UserManagementController extends BaseController {
         Label l4 = new Label(user.getRole());
         l4.setPrefWidth(120);
 
-        Label l5 = new Label(user.getCreated());
+        Label l5 = new Label(
+                user.getCreated() != null
+                        ? user.getCreated().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                        : ""
+        );
         l5.setPrefWidth(120);
 
         Button edit = new Button("Edit");
