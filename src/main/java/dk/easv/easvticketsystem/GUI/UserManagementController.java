@@ -46,7 +46,7 @@ public class UserManagementController extends BaseController {
 
     @FXML
     private void createUser() {
-        SceneManager.load("createCoordinator.fxml");
+        SceneManager.load("createUser.fxml");
     }
 
     private void openEditUser(User user) {
