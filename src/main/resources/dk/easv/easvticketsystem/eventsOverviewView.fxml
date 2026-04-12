@@ -3,34 +3,52 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="dk.easv.easvticketsystem.GUI.EventsOverviewController"
-      spacing="25"
-      style="-fx-padding: 25;">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="dk.easv.easvticketsystem.GUI.EventsOverviewController"
+            style="-fx-padding: 25;">
 
-<VBox spacing="10" styleClass="card">
+    <!-- TOP BAR -->
+    <top>
+        <HBox spacing="20"
+              alignment="CENTER_LEFT"
+              styleClass="header"
+              style="-fx-padding:15;">
 
-    <Button text="Logout"
-            onAction="#logout"
-            styleClass="secondary-btn"/>
+            <Label text="Events Overview" styleClass="headerTitle"/>
 
-    <Label text="Events Overview" styleClass="title"/>
+            <Region HBox.hgrow="ALWAYS"/>
 
-    <!-- TABLE HEADER -->
-    <HBox spacing="20">
-        <Label text="Title" prefWidth="180"/>
-        <Label text="Date" prefWidth="120"/>
-        <Label text="Location" prefWidth="220"/>
-        <Label text="Coordinator" prefWidth="140"/>
-        <Label text="Tickets" prefWidth="100"/>
-        <Label text="Actions" prefWidth="120"/>
-    </HBox>
+            <Label text="Logged in as: admin" styleClass="subtitle"/>
 
-    <Separator/>
+            <Button text="Logout"
+                    onAction="#logout"
+                    styleClass="secondary-btn"/>
 
-    <!-- EVENTS LIST -->
-    <VBox fx:id="eventContainer" spacing="8"/>
+        </HBox>
+    </top>
 
-</VBox>
+    <!-- CENTER CONTENT -->
+    <center>
+        <VBox spacing="10" styleClass="card">
 
-</VBox>
+            <Label text="Events Overview" styleClass="title"/>
+
+            <!-- TABLE HEADER -->
+            <HBox spacing="20">
+                <Label text="Title" prefWidth="180"/>
+                <Label text="Date" prefWidth="120"/>
+                <Label text="Location" prefWidth="220"/>
+                <Label text="Coordinator" prefWidth="140"/>
+                <Label text="Tickets" prefWidth="100"/>
+                <Label text="Actions" prefWidth="120"/>
+            </HBox>
+
+            <Separator/>
+
+            <!-- EVENTS LIST -->
+            <VBox fx:id="eventContainer" spacing="8"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>

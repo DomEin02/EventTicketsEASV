@@ -96,4 +96,17 @@ public class UserDAO {
             stmt.executeUpdate();
         }
     }
+
+    public void deleteUser(int id) throws Exception {
+
+        String sql = "DELETE FROM Users WHERE user_id = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            stmt.executeUpdate();
+        }
+    }
 }

@@ -83,9 +83,23 @@
     -fx-background-color: #475569;
 }
 
+.secondary-btn {
+    -fx-background-color: #334155;
+    -fx-padding: 6;
+}
+
+.secondary-btn:hover {
+    -fx-background-color: #475569;
+    -fx-cursor: hand;
+}
+
 .row {
     -fx-padding: 6 4;
     -fx-border-color: transparent transparent #334155 transparent;
+}
+
+.row:hover {
+    -fx-background-color: #1e293b;
 }
 
 /* header */
@@ -292,4 +306,9 @@
 .combo-box .list-view .list-cell:selected {
     -fx-background-color: #2563eb;
     -fx-text-fill: white;
+}
+
+.text-field,
+.combo-box {
+    -fx-pref-height: 32;
 }

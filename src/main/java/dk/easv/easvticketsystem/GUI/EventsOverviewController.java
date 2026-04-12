@@ -9,6 +9,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -68,14 +70,36 @@ public class EventsOverviewController extends BaseController {
         Label l5 = new Label(event.getMaxCapacity() + " tickets");
         l5.setPrefWidth(100);
 
+        // ======================
         // ASSIGN BUTTON
-        Button assign = new Button("Assign");
+        // ======================
+        Button assign = new Button();
+
+        Image assignImg = new Image(getClass().getResource("/icons/assign.png").toExternalForm());
+        ImageView assignView = new ImageView(assignImg);
+
+        assignView.setFitWidth(16);
+        assignView.setFitHeight(16);
+        assignView.setPreserveRatio(true);
+
+        assign.setGraphic(assignView);
         assign.getStyleClass().add("secondary-btn");
 
         assign.setOnAction(e -> openAssignCoordinator(event));
 
+        // ======================
         // DELETE BUTTON
-        Button delete = new Button("Delete");
+        // ======================
+        Button delete = new Button();
+
+        Image deleteImg = new Image(getClass().getResource("/icons/delete.png").toExternalForm());
+        ImageView deleteView = new ImageView(deleteImg);
+
+        deleteView.setFitWidth(16);
+        deleteView.setFitHeight(16);
+        deleteView.setPreserveRatio(true);
+
+        delete.setGraphic(deleteView);
         delete.getStyleClass().add("secondary-btn");
 
         delete.setOnAction(e -> {
@@ -84,7 +108,6 @@ public class EventsOverviewController extends BaseController {
                 eventContainer.getChildren().remove(row);
 
             } catch (Exception ex) {
-
                 ex.printStackTrace();
 
                 Alert alert = new Alert(Alert.AlertType.ERROR);

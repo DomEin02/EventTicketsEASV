@@ -6,6 +6,8 @@ import dk.easv.easvticketsystem.SceneManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -19,12 +21,14 @@ public class UserManagementController extends BaseController {
     @FXML private ComboBox<String> roleFilter;
 
     private List<User> allUsers;
+    private UserManager userManager;
 
     @FXML
     public void initialize() {
 
         try {
-            UserManager userManager = new UserManager();
+            userManager = new UserManager();
+
             allUsers = userManager.getAllUsers();
             loadUsers(allUsers);
 
@@ -54,6 +58,24 @@ public class UserManagementController extends BaseController {
         SceneManager.load("userEditor.fxml");
     }
 
+    private void deleteUser(User user, HBox row) {
+
+        try {
+            userManager.deleteUser(user.getUserId());
+
+            userContainer.getChildren().remove(row);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Could not delete user");
+            alert.setContentText(ex.getMessage());
+            alert.showAndWait();
+        }
+    }
+
     private void addUser(User user) {
 
         HBox row = new HBox(20);
@@ -79,13 +101,51 @@ public class UserManagementController extends BaseController {
         );
         l5.setPrefWidth(120);
 
-        Button edit = new Button("Edit");
+        // =========================
+        // EDIT ICON
+        // =========================
+        Button edit = new Button();
+
+        Image editImg = new Image(getClass().getResource("/icons/edit.png").toExternalForm());
+        ImageView editView = new ImageView(editImg);
+
+        editView.setFitWidth(16);
+        editView.setFitHeight(16);
+        editView.setPreserveRatio(true);
+
+        edit.setGraphic(editView);
         edit.getStyleClass().add("secondary-btn");
+
         edit.setOnAction(e -> openEditUser(user));
 
-        Button delete = new Button("Delete");
+        // =========================
+        // DELETE ICON
+        // =========================
+        Button delete = new Button();
+
+        Image deleteImg = new Image(getClass().getResource("/icons/delete.png").toExternalForm());
+        ImageView deleteView = new ImageView(deleteImg);
+
+        deleteView.setFitWidth(16);
+        deleteView.setFitHeight(16);
+        deleteView.setPreserveRatio(true);
+
+        delete.setGraphic(deleteView);
         delete.getStyleClass().add("secondary-btn");
-        delete.setOnAction(e -> userContainer.getChildren().remove(row));
+
+        delete.setOnAction(e -> {
+
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle("Delete User");
+            confirm.setHeaderText("Are you sure?");
+            confirm.setContentText("This user will be permanently deleted.");
+
+            confirm.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    deleteUser(user, row);
+                }
+            });
+        });
 
         HBox actions = new HBox(8, edit, delete);
         actions.setPrefWidth(140);
