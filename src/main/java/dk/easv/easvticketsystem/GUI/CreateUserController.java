@@ -31,7 +31,7 @@ public class CreateUserController {
     }
 
     @FXML
-    private void createCoordinator() {
+    private void createUser() {
         try {
             String name = nameField.getText();
             String username = usernameField.getText();

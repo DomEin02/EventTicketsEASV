@@ -20,7 +20,7 @@ public class LoginController {
 
         if (user.equals("admin")) {
 
-            SceneManager.load("AdminDashboard.fxml");
+            SceneManager.load("adminDashboard.fxml");
 
         } else if (user.equals("coord")) {
 

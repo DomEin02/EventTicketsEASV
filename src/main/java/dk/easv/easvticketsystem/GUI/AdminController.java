@@ -21,8 +21,8 @@ public class AdminController extends BaseController {
     public void initialize() {
 
         // load views
-        userView = loadView("/fxml/UserManagementView.fxml");
-        eventView = loadView("/fxml/EventsOverviewView.fxml");
+        userView = loadView("/fxml/userManagementView.fxml");
+        eventView = loadView("/fxml/eventsOverviewView.fxml");
 
         // default view
         contentPane.getChildren().setAll(userView);

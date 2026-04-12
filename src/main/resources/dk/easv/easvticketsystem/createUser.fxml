@@ -29,7 +29,7 @@
         <!-- ACTIONS -->
         <HBox spacing="10">
             <Button text="Cancel" onAction="#cancel" styleClass="secondary-btn"/>
-            <Button text="Create Coordinator" onAction="#createCoordinator" styleClass="primary-btn"/>
+            <Button text="Create User" onAction="#createUser" styleClass="primary-btn"/>
         </HBox>
 
     </VBox>
