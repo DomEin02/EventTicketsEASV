@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 
 import java.time.LocalDate;
 
-public class CreateCoordinatorController {
+public class CreateUserController {
 
     @FXML
     private TextField nameField;

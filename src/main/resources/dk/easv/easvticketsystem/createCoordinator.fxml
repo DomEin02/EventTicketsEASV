@@ -6,7 +6,7 @@
 
 <?import java.lang.String?>
 <VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="dk.easv.easvticketsystem.GUI.CreateCoordinatorController"
+      fx:controller="dk.easv.easvticketsystem.GUI.CreateUserController"
       alignment="CENTER" spacing="20">
 
     <VBox spacing="12" maxWidth="420" styleClass="card">
