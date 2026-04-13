@@ -19,7 +19,7 @@ public class LoginController {
         String pass = password.getText().trim();
 
         if (user.isEmpty() || pass.isEmpty()) {
-            info.setText("Please enter username and password");
+            info.setText("Please enter username and password!");
             return;
         }
 
@@ -32,7 +32,7 @@ public class LoginController {
             SceneManager.load("coordinator.fxml");
 
         } else {
-            info.setText("Invalid username or password");
+            info.setText("Invalid username or password!");
         }
     }
 }
