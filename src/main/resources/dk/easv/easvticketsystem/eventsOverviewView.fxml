@@ -14,7 +14,7 @@
               styleClass="header"
               style="-fx-padding:15;">
 
-            <Label text="Events Overview" styleClass="headerTitle"/>
+            <Label text="" styleClass="headerTitle"/>
 
             <Region HBox.hgrow="ALWAYS"/>
 

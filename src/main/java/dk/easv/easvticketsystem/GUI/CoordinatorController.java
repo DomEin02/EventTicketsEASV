@@ -1,7 +1,6 @@
 package dk.easv.easvticketsystem.GUI;
 
 import dk.easv.easvticketsystem.BLL.EventManager;
-import dk.easv.easvticketsystem.DAL.EventDAO;
 import dk.easv.easvticketsystem.SceneManager;
 import dk.easv.easvticketsystem.model.Event;
 import javafx.fxml.FXML;
@@ -14,9 +13,11 @@ import javafx.scene.layout.VBox;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javafx.scene.image.ImageView;
 
-public class CoordinatorController extends BaseController{
+public class CoordinatorController extends BaseController {
 
     @FXML private VBox eventContainer;
     @FXML private TextField searchField;
@@ -33,43 +34,34 @@ public class CoordinatorController extends BaseController{
             EventManager manager = new EventManager();
             allEvents = manager.getAllEvents();
             loadEvents(allEvents);
-        }
-        catch (Exception e) {
-
+        } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
 
     private void loadEvents(List<Event> events) {
-
         eventContainer.getChildren().clear();
 
         try {
             EventManager manager = new EventManager();
 
             for (Event e : events) {
-
                 int sold = manager.getTicketCount(e.getEventId());
-
                 addEvent(e, sold + "/" + e.getMaxCapacity());
             }
 
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     @FXML
     private void clearFilters() {
-        // Reset fields
         searchField.clear();
         locationFilter.clear();
         capacityFilter.clear();
         dateFilter.setValue(null);
         futureCheck.setSelected(false);
-        // Reload all events
         loadEvents(allEvents);
     }
 
@@ -77,13 +69,9 @@ public class CoordinatorController extends BaseController{
     private void filterEvents() {
 
         String search = searchField.getText().toLowerCase();
-
         String locationText = locationFilter.getText().toLowerCase();
-
         String capacityText = capacityFilter.getText();
-
         LocalDate selectedDate = dateFilter.getValue();
-
         boolean futureOnly = futureCheck.isSelected();
 
         List<Event> filtered = new ArrayList<>();
@@ -92,49 +80,38 @@ public class CoordinatorController extends BaseController{
 
             boolean matches = true;
 
-            //  Title search
-            if (!search.isEmpty()) {
-                if (!e.getTitle().toLowerCase().contains(search)) {
-                    matches = false;
-                }
+            if (!search.isEmpty() && !e.getTitle().toLowerCase().contains(search)) {
+                matches = false;
             }
 
-            //  Location filter
-            if (!locationText.isEmpty()) {
-                if (!e.getLocation().toLowerCase().contains(locationText)) {
-                    matches = false;
-                }
+            if (!locationText.isEmpty() && !e.getLocation().toLowerCase().contains(locationText)) {
+                matches = false;
             }
 
-            //  Date filter
-            if (selectedDate != null) {
-                if (!e.getStartDateTime().toLocalDate().equals(selectedDate)) {
-                    matches = false;
-                }
+            if (selectedDate != null &&
+                    !e.getStartDateTime().toLocalDate().equals(selectedDate)) {
+                matches = false;
             }
 
-            //  Capacity filter
             if (!capacityText.isEmpty()) {
                 try {
                     int minCapacity = Integer.parseInt(capacityText);
                     if (e.getMaxCapacity() < minCapacity) {
                         matches = false;
                     }
-                }
-                catch (NumberFormatException ignored) {}
+                } catch (NumberFormatException ignored) {}
             }
 
-            //  Future events only
-            if (futureOnly) {
-                if (e.getStartDateTime().toLocalDate().isBefore(LocalDate.now())) {
-                    matches = false;
-                }
+            if (futureOnly &&
+                    e.getStartDateTime().toLocalDate().isBefore(LocalDate.now())) {
+                matches = false;
             }
+
             if (matches) {
                 filtered.add(e);
-
             }
         }
+
         loadEvents(filtered);
     }
 
@@ -150,69 +127,30 @@ public class CoordinatorController extends BaseController{
         row.setAlignment(Pos.CENTER_LEFT);
         row.getStyleClass().add("row");
 
-        Label l1 = new Label(event.getTitle());
-        l1.setPrefWidth(180);
+        Label l1 = createLabel(event.getTitle(), 180);
+        Label l2 = createLabel(event.getStartDateTime().toLocalDate().toString(), 120);
+        Label l3 = createLabel(event.getLocation(), 220);
+        Label l4 = createLabel(event.getNotes(), 120);
+        Label l5 = createLabel(tickets, 100);
 
-        Label l2 = new Label(event.getStartDateTime().toLocalDate().toString());
-        l2.setPrefWidth(120);
+        HBox actions = createButtons(event, row);
 
-        Label l3 = new Label(event.getLocation());
-        l3.setPrefWidth(220);
+        row.getChildren().addAll(l1, l2, l3, l4, l5, actions);
+        eventContainer.getChildren().add(row);
+    }
 
-        Label l4 = new Label(event.getNotes());
-        l4.setPrefWidth(120);
+    private Label createLabel(String text, int width) {
+        Label label = new Label(text);
+        label.setPrefWidth(width);
+        return label;
+    }
 
-        Label l5 = new Label(tickets);
-        l5.setPrefWidth(100);
+    private HBox createButtons(Event event, HBox row) {
 
+        Button edit = createIconButton("/icons/edit.png", () -> openEditor(event));
 
-        //Edit button
-        Button edit = new Button("");
+        Button delete = createIconButton("/icons/delete.png", () -> confirmDelete(event, row));
 
-        //Load edit icon
-        Image editImage = new Image(getClass().getResource("/icons/edit.png").toExternalForm());
-        ImageView editImageView = new ImageView(editImage);
-
-        editImageView.setFitWidth(16);
-        editImageView.setFitHeight(16);
-        editImageView.setPreserveRatio(true);
-
-        edit.setGraphic(editImageView);
-        edit.getStyleClass().add("secondary-btn");
-        edit.setOnAction(e ->openEditor(event));
-
-
-        //Delete button
-        Button delete = new Button("");
-
-        //Load Icon
-        Image image = new Image(getClass().getResource("/icons/delete.png").toExternalForm());
-        ImageView icon = new ImageView(image);
-
-        //Icon size
-        icon.setFitWidth(16);
-        icon.setFitHeight(16);
-        icon.setPreserveRatio(true);
-
-        //Icon on button
-        delete.setGraphic(icon);
-        delete.getStyleClass().add("secondary-btn");
-        delete.setOnAction(e -> {
-            try {
-                EventManager manager = new EventManager();
-                manager.deleteEvent(event.getEventId());   // Slet fra DB
-                eventContainer.getChildren().remove(row); // Fjern fra GUI
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Could not delete event");
-                alert.setContentText(ex.getMessage());
-                alert.showAndWait();
-            }
-                });
-
-        //Ticket button
         Button ticketsBtn = new Button("Tickets");
         ticketsBtn.getStyleClass().add("primary-btn");
         ticketsBtn.setOnAction(e -> openTickets(event.getTitle()));
@@ -220,13 +158,49 @@ public class CoordinatorController extends BaseController{
         HBox actions = new HBox(8, edit, delete, ticketsBtn);
         actions.setPrefWidth(180);
 
-        row.getChildren().addAll(l1, l2, l3, l4, l5, actions);
+        return actions;
+    }
 
-        eventContainer.getChildren().add(row);
+    private Button createIconButton(String path, Runnable action) {
+
+        ImageView icon = new ImageView(
+                new Image(getClass().getResource(path).toExternalForm())
+        );
+
+        icon.setFitWidth(16);
+        icon.setFitHeight(16);
+        icon.setPreserveRatio(true);
+
+        Button btn = new Button();
+        btn.setGraphic(icon);
+        btn.getStyleClass().add("secondary-btn");
+
+        btn.setOnAction(e -> action.run());
+
+        return btn;
+    }
+
+    private void confirmDelete(Event event, HBox row) {
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm Delete");
+        confirm.setHeaderText("Delete event?");
+        confirm.setContentText("This action cannot be undone.");
+
+        Optional<ButtonType> result = confirm.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                EventManager manager = new EventManager();
+                manager.deleteEvent(event.getEventId());
+                eventContainer.getChildren().remove(row);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     private void openEditor(Event event) {
-
         EventEditorController.selectedEvent = event;
         SceneManager.load("eventEditor.fxml");
     }
@@ -235,5 +209,4 @@ public class CoordinatorController extends BaseController{
         TicketController.selectedEventName = eventName;
         SceneManager.load("ticket.fxml");
     }
-
 }

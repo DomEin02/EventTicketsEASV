@@ -73,6 +73,16 @@
     -fx-background-color: linear-gradient(to right,#1d4ed8,#4338ca);
 }
 
+.create-btn {
+    -fx-background-color: #27a327;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12;
+    -fx-padding: 8 14 8 14;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0, 0, 2);
+}
+
 .secondary-btn {
     -fx-background-color: #334155;
     -fx-text-fill: white;
