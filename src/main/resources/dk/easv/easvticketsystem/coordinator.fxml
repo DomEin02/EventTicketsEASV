@@ -21,6 +21,7 @@
             <Label styleClass="headerTitle" text="Coordinator Dashboard" />
             <Region HBox.hgrow="ALWAYS" />
             <Button onAction="#logout" styleClass="secondary-btn" text="Logout" />
+            <Label text="Logged in as: admin" styleClass="subtitle"/>
         </HBox>
     </top>
 

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.ImageView;
 
-public class CoordinatorController {
+public class CoordinatorController extends BaseController{
 
     @FXML private VBox eventContainer;
     @FXML private TextField searchField;
@@ -142,11 +142,6 @@ public class CoordinatorController {
     private void createEvent() {
         EventEditorController.selectedEvent = null;
         SceneManager.load("eventEditor.fxml");
-    }
-
-    @FXML
-    private void logout() {
-        SceneManager.load("login.fxml");
     }
 
     private void addEvent(Event event, String tickets) {
