@@ -56,7 +56,7 @@ public class CreateUserController {
             success.setHeaderText("Coordinator created successfully!");
             success.showAndWait();
 
-            SceneManager.load("UserManagement.fxml");
+            SceneManager.load("userManagement.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,6 +69,6 @@ public class CreateUserController {
 
         @FXML
         private void cancel () {
-            SceneManager.load("UserManagement.fxml");
+            SceneManager.load("userManagement.fxml");
         }
-    }
+}

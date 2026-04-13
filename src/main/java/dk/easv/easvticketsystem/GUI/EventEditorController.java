@@ -3,9 +3,7 @@ package dk.easv.easvticketsystem.GUI;
 import dk.easv.easvticketsystem.BLL.EventManager;
 import dk.easv.easvticketsystem.SceneManager;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import dk.easv.easvticketsystem.model.Event;
 
 import java.time.LocalDate;
@@ -28,13 +26,47 @@ public class EventEditorController {
     private TextField maxTicketsField;
 
     @FXML
+    private DatePicker endDatePicker;
+
+    @FXML
+    private TextField endTimeField;
+
+    @FXML
+    private TextArea notesField;
+
+    @FXML
+    private TextArea guidanceField;
+
+    @FXML
+    private Label titleLabel;
+
+    @FXML
+    private Button saveButton;
+
+    @FXML
     public void initialize() {
+
         if (selectedEvent != null) {
+            // EDIT MODE
+            titleLabel.setText("Edit Event");
+            saveButton.setText("Save Changes");
             titleField.setText(selectedEvent.getTitle());
             datePicker.setValue(selectedEvent.getStartDateTime().toLocalDate());
             timeField.setText(selectedEvent.getStartDateTime().toLocalTime().toString());
+            // END DATETIME
+            if (selectedEvent.getEndDateTime() != null) {
+                endDatePicker.setValue(selectedEvent.getEndDateTime().toLocalDate());
+                endTimeField.setText(selectedEvent.getEndDateTime().toLocalTime().toString());
+            }
             locationField.setText(selectedEvent.getLocation());
+            notesField.setText(selectedEvent.getNotes());
+            guidanceField.setText(selectedEvent.getLocationGuidance());
             maxTicketsField.setText(String.valueOf(selectedEvent.getMaxCapacity()));
+        }
+        else {
+            // CREATE MODE
+            titleLabel.setText("Create Event");
+            saveButton.setText("Create Event");
         }
     }
 
@@ -42,76 +74,93 @@ public class EventEditorController {
     private void saveChanges() {
 
         try {
-            //Get input
+            // GET INPUT
             String title = titleField.getText();
             LocalDate date = datePicker.getValue();
             String time = timeField.getText();
             String location = locationField.getText();
             String maxTicketsStr = maxTicketsField.getText().trim();
-
-            //Check empty fields
+            String notes = notesField.getText();
+            String guidance = guidanceField.getText();
+            // VALIDATION
             if (title.isEmpty() || date == null || time.isEmpty() || location.isEmpty() || maxTicketsStr.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Input Error");
-                alert.setHeaderText("All fields must be filled in");
+                alert.setHeaderText("All required fields must be filled");
                 alert.showAndWait();
                 return;
             }
-
-            //Parse maxTickets and check if > 0
+            // PARSE CAPACITY
             int maxTickets;
+
             try {
                 maxTickets = Integer.parseInt(maxTicketsStr);
-                if (maxTickets <= 0) throw new NumberFormatException();
-            } catch (NumberFormatException e) {
+                if (maxTickets <= 0)
+                    throw new NumberFormatException();
+            }
+            catch (NumberFormatException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Input Error");
                 alert.setHeaderText("Max tickets must be positive");
                 alert.showAndWait();
                 return;
             }
-
-            //Parse date and time
+            // PARSE START DATETIME
             LocalDateTime startDateTime;
             try {
-                LocalTime timeParsed = LocalTime.parse(time);
-                startDateTime = LocalDateTime.of(date, timeParsed);
-            } catch (Exception ex) {
+                LocalTime parsedTime = LocalTime.parse(time);
+                startDateTime = LocalDateTime.of(date, parsedTime);
+            }
+            catch (Exception ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Input Error");
-                alert.setHeaderText("Invalid date or time format");
-                alert.setContentText("Invalid date or time format");
+                alert.setHeaderText("Invalid start time format (HH:mm)");
                 alert.showAndWait();
                 return;
             }
-
-            //Save in DB
+            // PARSE END DATETIME
+            LocalDateTime endDateTime = null;
+            if (endDatePicker.getValue() != null && !endTimeField.getText().isEmpty()) {
+                try {
+                    LocalTime endTime = LocalTime.parse(endTimeField.getText());
+                    endDateTime = LocalDateTime.of(endDatePicker.getValue(), endTime);
+                }
+                catch (Exception ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Input Error");
+                    alert.setHeaderText("Invalid end time format (HH:mm)");
+                    alert.showAndWait();
+                    return;
+                }
+            }
+            // SAVE TO DATABASE
             EventManager manager = new EventManager();
-
             if (selectedEvent != null) {
+                // UPDATE EXISTING
                 selectedEvent.setTitle(title);
                 selectedEvent.setStartDateTime(startDateTime);
+                selectedEvent.setEndDateTime(endDateTime);
                 selectedEvent.setLocation(location);
+                selectedEvent.setNotes(notes);
+                selectedEvent.setLocationGuidance(guidance);
                 selectedEvent.setMaxCapacity(maxTickets);
+
                 manager.updateEvent(selectedEvent);
-            } else {
-                Event newEvent = new Event(
-                        0, title,
-                        startDateTime,
-                        null,
-                        location,
-                        "",
-                        "",
-                        maxTickets);
+            }
+            else {
+                // CREATE NEW
+                Event newEvent = new Event(0, title, startDateTime, endDateTime, location, notes, guidance, maxTickets);
                 int generatedId = manager.createEvent(newEvent);
                 newEvent.setEventId(generatedId);
             }
-
+            // RETURN TO SCREEN
             selectedEvent = null;
-            SceneManager.load("coordinator.fxml");
 
-        } catch (Exception e) {
+            SceneManager.load("coordinator.fxml");
+        }
+        catch (Exception e) {
             e.printStackTrace();
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Database Error");
             alert.setHeaderText("Could not save event");

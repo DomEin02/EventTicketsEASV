@@ -7,12 +7,12 @@ public class AdminMenuController {
 
     @FXML
     private void openUsers() {
-        SceneManager.load("userManagementView.fxml");
+        SceneManager.load("userManagement.fxml");
     }
 
     @FXML
     private void openEvents() {
-        SceneManager.load("eventsOverviewView.fxml");
+        SceneManager.load("eventsOverview.fxml");
     }
 
     @FXML

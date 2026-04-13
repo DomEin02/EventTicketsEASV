@@ -10,29 +10,33 @@ import java.util.List;
 
 public class EventDAO {
 
-    public EventDAO(){
-    }
-
     public int createEvent(Event event) throws Exception {
-        String sql = "INSERT INTO Events (title, start_datetime, location, notes, max_capacity) VALUES (?, ?, ?, ?, ?)";
+
+        String sql = "INSERT INTO Events " + "(title, start_datetime, end_datetime, " + "location, notes, location_guidance, max_capacity) " + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
         try (Connection conn = DBConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, event.getTitle());
             stmt.setTimestamp(2, java.sql.Timestamp.valueOf(event.getStartDateTime()));
-            stmt.setString(3, event.getLocation());
-            String notes = event.getNotes();
-            if (notes == null) notes ="";
-            stmt.setString(4, notes);
-            stmt.setInt(5, event.getMaxCapacity());
-
+            // END DATETIME
+            if (event.getEndDateTime() != null) {
+                stmt.setTimestamp(3, java.sql.Timestamp.valueOf(event.getEndDateTime()));
+            }
+            else {
+                stmt.setNull(3, java.sql.Types.TIMESTAMP);
+            }
+            stmt.setString(4, event.getLocation());
+            stmt.setString(5, event.getNotes());
+            stmt.setString(6, event.getLocationGuidance());
+            stmt.setInt(7, event.getMaxCapacity());
             stmt.executeUpdate();
-
             ResultSet keys = stmt.getGeneratedKeys();
             if (keys.next()) {
                 int id = keys.getInt(1);
                 event.setEventId(id);
                 return id;
-            } else {
+            }
+            else {
                 throw new Exception("Event id not found");
             }
         }
@@ -66,34 +70,40 @@ public class EventDAO {
         return events;
     }
 
-    public void updateEvent(Event event)
-            throws Exception {
+    public void updateEvent(Event event) throws Exception {
 
-        String sql = "UPDATE Events " + "SET title = ?, " + "start_datetime = ?, " + "location = ?, "+ "notes = ?, " + "max_capacity = ? " + "WHERE event_id = ?";
+        String sql = "UPDATE Events SET " + "title = ?, " + "start_datetime = ?, " + "end_datetime = ?, " + "location = ?, " + "notes = ?, " + "location_guidance = ?, " + "max_capacity = ? " + "WHERE event_id = ?";
 
         try (Connection conn = DBConnector.getConnection();
-
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, event.getTitle());
             stmt.setTimestamp(2, java.sql.Timestamp.valueOf(event.getStartDateTime()));
-            stmt.setString(3, event.getLocation());
-            stmt.setString(4, event.getNotes());
-            stmt.setInt(5, event.getMaxCapacity());
-            stmt.setInt(6, event.getEventId());
+            // END DATETIME
+            if (event.getEndDateTime() != null) {
+                stmt.setTimestamp(3, java.sql.Timestamp.valueOf(event.getEndDateTime()));
+            }
+            else {
+                stmt.setNull(3, java.sql.Types.TIMESTAMP);
+            }
+            stmt.setString(4, event.getLocation());
+            stmt.setString(5, event.getNotes());
+            stmt.setString(6, event.getLocationGuidance());
+            stmt.setInt(7, event.getMaxCapacity());
+            stmt.setInt(8, event.getEventId());
             stmt.executeUpdate();
         }
     }
 
     public int getTicketCountForEvent(int eventId) throws Exception {
+
         String sql = "SELECT COUNT(*) " + "FROM Tickets " + "WHERE event_id = ?";
 
         try (Connection conn = DBConnector.getConnection();
-
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, eventId);
 
             ResultSet rs = stmt.executeQuery();
-
             if (rs.next()) {
                 return rs.getInt(1);
             }

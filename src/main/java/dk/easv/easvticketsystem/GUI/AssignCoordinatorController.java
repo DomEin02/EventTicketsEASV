@@ -44,7 +44,7 @@ public class AssignCoordinatorController {
 
                 manager.assignCoordinator(selectedEvent.getEventId(), selected.getUserId());
             }
-            SceneManager.load("admin.fxml");
+            SceneManager.load("eventsOverview.fxml");
         }
 
         catch (Exception e) {
@@ -54,6 +54,6 @@ public class AssignCoordinatorController {
 
     @FXML
     private void cancel() {
-        SceneManager.load("admin.fxml");
+        SceneManager.load("eventsOverview.fxml");
     }
 }

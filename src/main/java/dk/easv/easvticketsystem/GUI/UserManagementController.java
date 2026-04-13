@@ -106,7 +106,7 @@ public class UserManagementController extends BaseController {
         // =========================
         Button edit = new Button();
 
-        Image editImg = new Image(getClass().getResource("/icons/edit.png").toExternalForm());
+        Image editImg = new Image(getClass().getResource("/Icons/edit.png").toExternalForm());
         ImageView editView = new ImageView(editImg);
 
         editView.setFitWidth(16);
@@ -123,7 +123,7 @@ public class UserManagementController extends BaseController {
         // =========================
         Button delete = new Button();
 
-        Image deleteImg = new Image(getClass().getResource("/icons/delete.png").toExternalForm());
+        Image deleteImg = new Image(getClass().getResource("/Icons/delete.png").toExternalForm());
         ImageView deleteView = new ImageView(deleteImg);
 
         deleteView.setFitWidth(16);

@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,23 +19,28 @@ import java.util.List;
 
 public class EventsOverviewController extends BaseController {
 
+    private EventManager eventManager;
+    private CoordinatorManager coordinatorManager;
+
     @FXML
     private VBox eventContainer;
 
     @FXML
     public void initialize() {
-
         try {
-            EventManager eventManager = new EventManager();
+            eventManager = new EventManager();
+            coordinatorManager = new CoordinatorManager();
+
             List<Event> events = eventManager.getAllEvents();
 
             eventContainer.getChildren().clear();
 
             for (Event e : events) {
+
                 addEvent(e);
             }
-
         } catch (Exception e) {
+
             e.printStackTrace();
         }
     }
@@ -58,8 +64,7 @@ public class EventsOverviewController extends BaseController {
         String coordinatorName = "Not Assigned";
 
         try {
-            CoordinatorManager manager = new CoordinatorManager();
-            coordinatorName = manager.getCoordinatorName(event.getEventId());
+            coordinatorName = coordinatorManager.getCoordinatorName(event.getEventId());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -75,7 +80,7 @@ public class EventsOverviewController extends BaseController {
         // ======================
         Button assign = new Button();
 
-        Image assignImg = new Image(getClass().getResource("/icons/assign.png").toExternalForm());
+        Image assignImg = new Image(getClass().getResource("/Icons/edit.png").toExternalForm());
         ImageView assignView = new ImageView(assignImg);
 
         assignView.setFitWidth(16);
@@ -92,7 +97,7 @@ public class EventsOverviewController extends BaseController {
         // ======================
         Button delete = new Button();
 
-        Image deleteImg = new Image(getClass().getResource("/icons/delete.png").toExternalForm());
+        Image deleteImg = new Image(getClass().getResource("/Icons/delete.png").toExternalForm());
         ImageView deleteView = new ImageView(deleteImg);
 
         deleteView.setFitWidth(16);
@@ -103,19 +108,35 @@ public class EventsOverviewController extends BaseController {
         delete.getStyleClass().add("secondary-btn");
 
         delete.setOnAction(e -> {
-            try {
-                new EventManager().deleteEvent(event.getEventId());
-                eventContainer.getChildren().remove(row);
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle("Delete Event");
+            confirm.setHeaderText("Are you sure?");
+            confirm.setContentText("This event will be permanently deleted.");
 
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Database Error");
-                alert.setHeaderText("Could not delete event");
-                alert.setContentText(ex.getMessage());
-                alert.showAndWait();
-            }
+            confirm.showAndWait().ifPresent(response -> {
+
+                if (response == ButtonType.OK) {
+                    try {
+                        EventManager manager = new EventManager();
+
+                        manager.deleteEvent(event.getEventId());
+
+                        eventContainer.getChildren().remove(row);
+
+                    } catch (Exception ex) {
+
+                        ex.printStackTrace();
+
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Database Error");
+                        alert.setHeaderText("Could not delete event");
+                        alert.setContentText(ex.getMessage());
+                        alert.showAndWait();
+                    }
+                }
+            });
+
         });
 
         HBox actions = new HBox(8, assign, delete);

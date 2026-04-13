@@ -20,13 +20,14 @@ public class EventManager {
 
     // CREATE EVENT
     public int createEvent(Event event) throws Exception {
-        if(event.getTitle().isEmpty())
+        if (event.getTitle() == null || event.getTitle().isEmpty())
             throw new Exception("Title required");
-        if(event.getLocation().isEmpty())
+        if (event.getLocation() == null || event.getLocation().isEmpty())
             throw new Exception("Location required");
-        if(event.getMaxCapacity() <= 0)
+        if (event.getNotes() == null)
+            event.setNotes("");
+        if (event.getMaxCapacity() <= 0)
             throw new Exception("Capacity must be > 0");
-
         return eventDAO.createEvent(event);
     }
 

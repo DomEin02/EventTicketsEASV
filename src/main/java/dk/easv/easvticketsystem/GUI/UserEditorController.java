@@ -1,6 +1,6 @@
 package dk.easv.easvticketsystem.GUI;
 
-import dk.easv.easvticketsystem.DAL.UserDAO;
+import dk.easv.easvticketsystem.BLL.UserManager;
 import dk.easv.easvticketsystem.model.User;
 import dk.easv.easvticketsystem.SceneManager;
 import javafx.fxml.FXML;
@@ -56,15 +56,15 @@ public class UserEditorController {
 
             selectedUser.setCreated(created);
 
-            UserDAO dao = new UserDAO();
-            dao.createUser(selectedUser);
+            UserManager manager = new UserManager();
+            manager.updateUser(selectedUser);
 
             Alert success = new Alert(Alert.AlertType.INFORMATION);
             success.setHeaderText("User saved successfully!");
             success.showAndWait();
 
             selectedUser = null;
-            SceneManager.load("admin.fxml");
+            SceneManager.load("userManagement.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,6 +78,6 @@ public class UserEditorController {
     @FXML
     private void cancel() {
         selectedUser = null;
-        SceneManager.load("UserManagement.fxml");
+        SceneManager.load("userManagement.fxml");
     }
 }

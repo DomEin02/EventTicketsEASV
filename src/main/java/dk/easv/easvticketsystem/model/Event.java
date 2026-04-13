@@ -38,23 +38,17 @@ public class Event {
 
     // Setters for editing
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setNotes(String notes) {this.notes = notes;}
+    public void setTitle(String title) {this.title = title;}
+    public void setStartDateTime(LocalDateTime startDateTime) {this.startDateTime = startDateTime;}
+    public void setLocation(String location) {this.location = location;}
+    public void setMaxCapacity(int maxCapacity) {this.maxCapacity = maxCapacity;}
+    public void setEventId(int id) {this.eventId = id;}
+    public void setLocationGuidance(String guidance) {this.locationGuidance = guidance;}
+    public void setEndDateTime(LocalDateTime endDateTime) {this.endDateTime = endDateTime;}
 
-    public void setStartDateTime(LocalDateTime startDateTime) {
-        this.startDateTime = startDateTime;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setMaxCapacity(int maxCapacity) {
-        this.maxCapacity = maxCapacity;
-    }
-
-    public void setEventId(int id) {
-        this.eventId = id;
+    @Override
+    public String toString() {
+        return title;
     }
 }
