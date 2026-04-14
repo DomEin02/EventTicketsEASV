@@ -11,6 +11,8 @@ public class User {
     private String password;
     private String role;
     private LocalDate created;
+    private String passwordHash;
+    private String salt;
 
     //Constructor without parameter
     public User() {}
@@ -58,8 +60,22 @@ public class User {
     public void setCreated(LocalDate created) {
         this.created = created;}
 
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+    public String getSalt() {
+        return salt;
+    }
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
     @Override
     public String toString() {
         return name;
     }
 }
+
