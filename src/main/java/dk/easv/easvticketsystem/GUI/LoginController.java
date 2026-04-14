@@ -18,17 +18,21 @@ public class LoginController {
         String user = username.getText().trim().toLowerCase();
         String pass = password.getText().trim();
 
-        if (user.equals("admin")) {
+        if (user.isEmpty() || pass.isEmpty()) {
+            info.setText("Please enter username and password!");
+            return;
+        }
 
+        if (user.equals("admin") && pass.equals("Admin123")) {
+            info.setText("");
             SceneManager.load("adminDashboard.fxml");
 
-        } else if (user.equals("coord")) {
-
+        } else if (user.equals("coord") && pass.equals("Coord123")) {
+            info.setText("");
             SceneManager.load("coordinator.fxml");
 
         } else {
-
-            info.setText("Unknown user");
+            info.setText("Invalid username or password!");
         }
     }
 }
