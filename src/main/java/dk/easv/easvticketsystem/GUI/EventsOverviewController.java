@@ -81,7 +81,7 @@ public class EventsOverviewController extends BaseController {
         // ======================
         Button assign = new Button();
 
-        Image assignImg = new Image(getClass().getResource("/Icons/edit.png").toExternalForm());
+        Image assignImg = new Image(getClass().getResource("/Icons/assign.png").toExternalForm());
         ImageView assignView = new ImageView(assignImg);
 
         assignView.setFitWidth(16);
@@ -157,11 +157,6 @@ public class EventsOverviewController extends BaseController {
 
     @FXML
     public void goToUserManagement(ActionEvent actionEvent) {
-        SceneManager.load("UserManagement.fxml");
-    }
-
-    @FXML
-    private void goToDashboard() {
-        SceneManager.load("adminDashboard.fxml");
+        SceneManager.load("userManagement.fxml");
     }
 }
