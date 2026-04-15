@@ -2,17 +2,62 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="dk.easv.easvticketsystem.GUI.TicketController"
       alignment="CENTER" spacing="15">
 
     <VBox spacing="12" maxWidth="360" styleClass="card">
+
+        <!-- HEADER -->
         <Label text="Sell Ticket" styleClass="title"/>
+
+        <!-- BUTTON -->
         <Button text="Free Ticket" onAction="#openFreeTicket" styleClass="secondary-btn"/>
+
+        <!-- EVENT -->
         <Label fx:id="eventNameLabel" styleClass="subtitle"/>
+
+        <!-- INPUTS -->
         <ComboBox fx:id="type"/>
+        <TextField fx:id="nameField" promptText="Customer Name"/>
+        <TextField fx:id="emailField" promptText="Customer Email"/>
+
+        <!-- GENERATE -->
         <Button text="Generate Ticket" onAction="#generate" styleClass="primary-btn"/>
-        <Label fx:id="ticketId" styleClass="subtitle"/>
+
+        <!-- TICKET CARD -->
+        <VBox spacing="10" alignment="CENTER"
+              style="-fx-background-color: #1e2a3a; -fx-padding: 20; -fx-background-radius: 10;">
+
+            <Label text="🎟 Ticket"
+                   style="-fx-font-size: 18; -fx-text-fill: white;" />
+
+            <Label fx:id="ticketId"
+                   text="Ticket ID"
+                   style="-fx-text-fill: white;" />
+
+            <Label fx:id="customerNameLabel"
+                   text="Name"
+                   style="-fx-text-fill: white;" />
+
+            <Label fx:id="customerEmailLabel"
+                   text="Email"
+                   style="-fx-text-fill: white;" />
+
+            <ImageView fx:id="qrImage"
+                       fitWidth="150"
+                       fitHeight="150"/>
+
+            <ImageView fx:id="barcodeImage"
+                       fitWidth="300"
+                       fitHeight="100"/>
+
+        </VBox>
+
+        <!-- LIST -->
+        <VBox fx:id="ticketContainer" spacing="5"/>
+
     </VBox>
 </VBox>
