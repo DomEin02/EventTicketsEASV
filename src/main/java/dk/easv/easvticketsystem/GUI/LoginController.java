@@ -40,10 +40,16 @@ public class LoginController {
 
             String hashedInput = PasswordUtil.hashPassword(passwordInput, user.getSalt());
 
+            System.out.println("Input password: " + passwordInput);
+            System.out.println("Salt from DB: " + user.getSalt());
+            System.out.println("Hashed input: " + hashedInput);
+            System.out.println("Stored hash: " + user.getPasswordHash());
+
             if (hashedInput.equals(user.getPasswordHash())) {
                 info.setText("");
 
-                if (user.getRole().equalsIgnoreCase("admin")) {
+                if (user.getRole().equalsIgnoreCase("Admin")) {
+                    System.out.println("LOGIN SUCCESS - role: " + user.getRole());
                     SceneManager.load("adminDashboard.fxml");
                 } else {
                     SceneManager.load("coordinator.fxml");
@@ -57,4 +63,5 @@ public class LoginController {
             e.printStackTrace();
         }
     }
+
 }
