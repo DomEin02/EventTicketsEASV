@@ -3,6 +3,7 @@ package dk.easv.easvticketsystem.GUI;
 import dk.easv.easvticketsystem.BLL.UserManager;
 import dk.easv.easvticketsystem.model.User;
 import dk.easv.easvticketsystem.SceneManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -185,5 +186,10 @@ public class UserManagementController extends BaseController {
         userSearchField.clear();
         roleFilter.setValue(null);
         loadUsers(allUsers);
+    }
+
+    @FXML
+    public void goToEventOverview(ActionEvent actionEvent) {
+        SceneManager.load("GUI.EventOverview.fxml");
     }
 }

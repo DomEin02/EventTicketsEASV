@@ -16,6 +16,10 @@
 
             <Label text="" styleClass="headerTitle"/>
 
+            <Button text="Go to User Management"
+                    onAction="#goToUserManagement"
+                    styleClass="primary-btn"/>
+
             <Region HBox.hgrow="ALWAYS"/>
 
             <Label text="Logged in as: admin" styleClass="subtitle"/>

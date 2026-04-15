@@ -4,6 +4,7 @@ import dk.easv.easvticketsystem.BLL.CoordinatorManager;
 import dk.easv.easvticketsystem.BLL.EventManager;
 import dk.easv.easvticketsystem.model.Event;
 import dk.easv.easvticketsystem.SceneManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -152,5 +153,10 @@ public class EventsOverviewController extends BaseController {
         AssignCoordinatorController.selectedEvent = event;
 
         SceneManager.load("assignCoordinator.fxml");
+    }
+
+    @FXML
+    public void goToUserManagement(ActionEvent actionEvent) {
+        SceneManager.load("GUI.UserManagement.fxml");
     }
 }
