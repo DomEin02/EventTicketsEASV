@@ -190,6 +190,6 @@ public class UserManagementController extends BaseController {
 
     @FXML
     public void goToEventOverview(ActionEvent actionEvent) {
-        SceneManager.load("GUI.EventOverview.fxml");
+        SceneManager.load("eventsOverview.fxml");
     }
 }
