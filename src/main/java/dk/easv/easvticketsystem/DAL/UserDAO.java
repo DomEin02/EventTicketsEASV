@@ -1,6 +1,7 @@
 package dk.easv.easvticketsystem.DAL;
 
 import dk.easv.easvticketsystem.model.User;
+import dk.easv.easvticketsystem.utils.PasswordUtil;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -48,8 +49,11 @@ public class UserDAO {
 
         String sql =
                 "INSERT INTO Users " +
-                        "(name, username, email, password_hash, role, created_date) " +
-                        "VALUES (?, ?, ?, ?, ?, ?)";
+                        "(name, username, email, password_hash, role, created_date, salt) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        String salt = PasswordUtil.generateSalt();
+        String hash = PasswordUtil.hashPassword(user.getPassword(), salt);
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -57,13 +61,14 @@ public class UserDAO {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getUsername());
             stmt.setString(3, user.getEmail());
-            stmt.setString(4, user.getPassword());
+            stmt.setString(4, hash);
             stmt.setString(5, user.getRole());
             stmt.setDate(6,
                     user.getCreated() != null
                             ? Date.valueOf(user.getCreated())
                             : Date.valueOf(LocalDate.now())
             );
+            stmt.setString(7, salt);
 
             stmt.executeUpdate();
         }
@@ -108,5 +113,35 @@ public class UserDAO {
 
             stmt.executeUpdate();
         }
+    }
+    //Get User by Username (For Login)
+    public User getUserByUsername(String username) throws Exception {
+
+        String sql = "SELECT * FROM Users WHERE username = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, username);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                User user = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("name"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("role"),
+                        rs.getDate("created_date").toLocalDate()
+                );
+
+                user.setPasswordHash(rs.getString("password_hash"));
+                user.setSalt(rs.getString("salt"));
+
+                return user;
+            }
+        }
+        return null;
     }
 }
